@@ -1,4 +1,4 @@
-package utils;
+package utils.csv;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
@@ -9,11 +9,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -94,7 +96,7 @@ public class CsvLibrary {
 	}
 
 	public List<List<String>> readCsvFile(String file) {
-		List<List<String>> csvData = new ArrayList();
+		List<List<String>> csvData = new ArrayList<>();
 		try {
 			FileReader filereader = new FileReader(file);
 			CSVReader csvReader = new CSVReader(filereader);
@@ -299,7 +301,7 @@ public class CsvLibrary {
 				break;
 			}
 		}
-		List<String> columnData = new ArrayList();
+		List<String> columnData = new ArrayList<>();
 		if (flag) {
 			for (int j = 0; j < data.size(); j++) {
 				columnData.add(data.get(j).get(pointer));
@@ -321,7 +323,7 @@ public class CsvLibrary {
 		try {
 			List<List<String>> data = getCsvData(file);
 			int pointer = columnNo;
-			List<String> columnData = new ArrayList();
+			List<String> columnData = new ArrayList<>();
 			for (int j = 0; j < data.size(); j++) {
 				columnData.add(data.get(j).get(pointer));
 			}
@@ -348,7 +350,7 @@ public class CsvLibrary {
 					break;
 				}
 			}
-			List<List<String>> itemDetails = new ArrayList();
+			List<List<String>> itemDetails = new ArrayList<>();
 			if (flag) {
 				outer: for (String expData : expDataList) {
 					for (int j = 0; j <= data.size(); j++) {
@@ -368,4 +370,5 @@ public class CsvLibrary {
 		}
 		return null;
 	}
+	
 }
