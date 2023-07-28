@@ -1,5 +1,9 @@
 package api.request;
 
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 import java.io.File;
 
 import org.testng.Assert;
@@ -11,7 +15,7 @@ import api.responseDTO.GetAPIResponseDTO;
 import api.responseDTO.GetAPIResponseDTO.Employee;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import utils.propertiesReader.PropertiesReader;
+import utils.fileReader.PropertiesReader;
 
 public class DoGetRequest {
 	private static final String proFfilePath = "." + File.separator + "src" + File.separator + "property"
@@ -30,7 +34,7 @@ public class DoGetRequest {
 				.get(endPoint).then().extract().response();
 		String formattedResponse = response.asString();
 		if (response.statusCode() == 200) {
-			Assert.assertEquals(response.statusCode(), 200);
+			AssertJUnit.assertEquals(response.statusCode(), 200);
 			getAPIResponseDTO = gson.fromJson(formattedResponse, GetAPIResponseDTO.class);
 			for(Employee emp:getAPIResponseDTO.getData()) {
 				if(getAPIResponseDTO.getData().get(0).getEmployee_name().equals("Tiger Nixon"))
@@ -39,7 +43,7 @@ public class DoGetRequest {
 			}
 
 		} else
-			Assert.assertTrue(false);
+			AssertJUnit.assertTrue(false);
 
 	}
 

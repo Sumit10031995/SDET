@@ -2,12 +2,15 @@ package dataProvider;
 
 import org.testng.annotations.DataProvider;
 
-public class APIDataProvider {
+import utils.fileReader.JSONFileReaderClient;
 
-	@DataProvider(name="API-POSTRequest-Body")
+public class APIDataProvider {
+	JSONFileReaderClient client=new JSONFileReaderClient();
+	
+	@DataProvider(name="API-POSTRequest-Body", parallel = true)
 	public Object[][] requestDetails(){
 		return new Object[][] {
-			{"abcd"}
+			{client.getBody()}
 		};
 	}
 }
