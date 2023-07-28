@@ -10,16 +10,18 @@ import UI.ListenerClass;
 import UI.page.BrowseFacebookPage;
 import utils.uiUtility.WaitUtils;
 
-@Listeners(ListenerClass.class)
 public class BrowseFacebookStep extends BaseClass {
 	@Test(groups = { "sanity" })
 	public void testFBLoginFeature() {
 		driver.get(BrowseFacebookPage.url);
+		extentTest.info("Navigated To FB URL");
 		BrowseFacebookPage page = PageFactory.initElements(driver, BrowseFacebookPage.class);
 		WaitUtils.visibilityOf(driver, page.getFBText());
 		page.getIdTextbox().sendKeys(page.id);
+		Assert.assertEquals("ram", "sumit");
 		page.getPassTextbox().sendKeys(page.password);
 		Assert.assertTrue(false);
+		extentTest.fail("TestExecutationFail");
 		page.getLoginButton().click();
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}

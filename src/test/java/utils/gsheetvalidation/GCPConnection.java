@@ -56,7 +56,7 @@ public class GCPConnection {
 		BlobId blobId = BlobId.of(bucketName, objectName);
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 		storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
-		System.out.println("File " + filePath + " uploaded to bucket " + bucketName + " as " + objectName);
+		logger.info("File " + filePath + " uploaded to bucket " + bucketName + " as " + objectName);
 	}
 
 	public static void deleteObject(String bucketName, String objectName) {
@@ -70,7 +70,7 @@ public class GCPConnection {
 			}
 			Storage.BlobSourceOption precondition = Storage.BlobSourceOption.generationMatch(blob.getGeneration());
 			storage.delete(bucketName, objectName, precondition);
-			System.out.println("Object " + objectName + " was deleted from " + bucketName);
+			logger.info("Object " + objectName + " was deleted from " + bucketName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

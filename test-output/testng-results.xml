@@ -2,17 +2,26 @@
 <testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-07-28T18:11:32 IST" name="Suite" finished-at="2023-07-28T18:11:41 IST" duration-ms="9167">
+  <suite started-at="2023-07-29T01:31:16 IST" name="Suite1" finished-at="2023-07-29T01:31:35 IST" duration-ms="18189">
     <groups>
       <group name="sanity">
-        <method signature="BrowseFacebookStep.testFBLoginFeature()[pri:0, instance:UI.step.BrowseFacebookStep@76a4ebf2]" name="testFBLoginFeature" class="UI.step.BrowseFacebookStep"/>
+        <method signature="BrowseFacebookStep.testFBLoginFeature()[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e]" name="testFBLoginFeature" class="UI.step.BrowseFacebookStep"/>
       </group> <!-- sanity -->
     </groups>
-    <test started-at="2023-07-28T18:11:32 IST" name="Test1" finished-at="2023-07-28T18:11:41 IST" duration-ms="9167">
+    <test started-at="2023-07-29T01:31:16 IST" name="BrowseFacebookStep" finished-at="2023-07-29T01:31:35 IST" duration-ms="18189">
       <class name="UI.step.BrowseFacebookStep">
-        <test-method is-config="true" signature="lunchBrowser(java.lang.String)[pri:0, instance:UI.step.BrowseFacebookStep@76a4ebf2]" started-at="2023-07-28T18:11:22 IST" name="lunchBrowser" finished-at="2023-07-28T18:11:32 IST" duration-ms="10282" status="PASS">
+        <test-method is-config="true" signature="initialiseExtentReport()[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e]" started-at="2023-07-29T01:31:16 IST" name="initialiseExtentReport" finished-at="2023-07-29T01:31:16 IST" duration-ms="321" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initialiseExtentReport -->
+        <test-method is-config="true" signature="lunchBrowser(org.testng.ITestContext, java.lang.String)[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e]" started-at="2023-07-29T01:31:16 IST" name="lunchBrowser" finished-at="2023-07-29T01:31:27 IST" duration-ms="10552" status="PASS">
           <params>
             <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5460b754]]>
+              </value>
+            </param>
+            <param index="1">
               <value>
                 <![CDATA[chrome]]>
               </value>
@@ -21,18 +30,19 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- lunchBrowser -->
-        <test-method signature="testFBLoginFeature()[pri:0, instance:UI.step.BrowseFacebookStep@76a4ebf2]" started-at="2023-07-28T18:11:32 IST" name="testFBLoginFeature" finished-at="2023-07-28T18:11:40 IST" duration-ms="7825" status="FAIL">
+        <test-method signature="testFBLoginFeature()[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e]" started-at="2023-07-29T01:31:27 IST" name="testFBLoginFeature" finished-at="2023-07-29T01:31:34 IST" duration-ms="7029" status="FAIL">
           <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[did not expect to find [true] but found [false]]]>
+              <![CDATA[expected [sumit] but found [ram]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: did not expect to find [true] but found [false]
+              <![CDATA[java.lang.AssertionError: expected [sumit] but found [ram]
 at org.testng.Assert.fail(Assert.java:97)
-at org.testng.Assert.failNotEquals(Assert.java:969)
-at org.testng.Assert.assertTrue(Assert.java:43)
-at org.testng.Assert.assertTrue(Assert.java:53)
-at UI.step.BrowseFacebookStep.testFBLoginFeature(BrowseFacebookStep.java:22)
+at org.testng.Assert.assertEqualsImpl(Assert.java:136)
+at org.testng.Assert.assertEquals(Assert.java:118)
+at org.testng.Assert.assertEquals(Assert.java:575)
+at org.testng.Assert.assertEquals(Assert.java:585)
+at UI.step.BrowseFacebookStep.testFBLoginFeature(BrowseFacebookStep.java:21)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -67,11 +77,26 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testFBLoginFeature -->
-        <test-method is-config="true" signature="quitQuit()[pri:0, instance:UI.step.BrowseFacebookStep@76a4ebf2]" started-at="2023-07-28T18:11:42 IST" name="quitQuit" finished-at="2023-07-28T18:11:42 IST" duration-ms="126" status="PASS">
+        <test-method is-config="true" signature="checkStatus(org.testng.ITestResult)[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e]" started-at="2023-07-29T01:31:34 IST" name="checkStatus" finished-at="2023-07-29T01:31:34 IST" duration-ms="454" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testFBLoginFeature status=FAILURE method=BrowseFacebookStep.testFBLoginFeature()[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- checkStatus -->
+        <test-method is-config="true" signature="quitQuit()[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e]" started-at="2023-07-29T01:31:34 IST" name="quitQuit" finished-at="2023-07-29T01:31:35 IST" duration-ms="121" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- quitQuit -->
+        <test-method is-config="true" signature="generateReport()[pri:0, instance:UI.step.BrowseFacebookStep@2eae8e6e]" started-at="2023-07-29T01:31:35 IST" name="generateReport" finished-at="2023-07-29T01:31:35 IST" duration-ms="680" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- generateReport -->
       </class> <!-- UI.step.BrowseFacebookStep -->
-    </test> <!-- Test1 -->
-  </suite> <!-- Suite -->
+    </test> <!-- BrowseFacebookStep -->
+  </suite> <!-- Suite1 -->
 </testng-results>

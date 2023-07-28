@@ -5,9 +5,12 @@
     <classes>
       <class name="UI.step.BrowseFacebookStep">
         <methods>
-          <include name="quitBrowser"/>
+          <include name="quitQuit"/>
+          <include name="checkStatus"/>
           <include name="testFBLoginFeature"/>
+          <include name="initialiseExtentReport"/>
           <include name="lunchBrowser"/>
+          <include name="generateReport"/>
         </methods>
       </class> <!-- UI.step.BrowseFacebookStep -->
     </classes>

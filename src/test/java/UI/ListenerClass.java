@@ -12,16 +12,14 @@ import org.testng.ITestResult;
 
 public class ListenerClass extends BaseClass implements ITestListener{
 	@Override
-	public void onStart(ITestContext context) {
-		System.out.println(driver.getWindowHandle());
-	}
-	@Override
 	public void onTestFailure(ITestResult result) {
-		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		File srcFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
 		final String filePath = "." + File.separator + "src" + File.separator + "screenshot" + File.separator
 				+ result.getMethod().getMethodName() + System.currentTimeMillis() + ".png";
 		try {
 			FileUtils.copyFile(srcFile, new File(filePath));
+			extentTest.addScreenCaptureFromPath(filePath);
+			extentTest.fail(result.getThrowable());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
