@@ -1,0 +1,3 @@
+{ 
+"name":"https://sumit.${env:env_name}.${cluster:cls_name}.api"
+}

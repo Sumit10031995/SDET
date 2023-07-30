@@ -3,16 +3,16 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="UI.step.BrowseFacebookStep">
+      <class name="api.request.DoGetRequest">
         <methods>
           <include name="quitQuit"/>
           <include name="checkStatus"/>
-          <include name="testFBLoginFeature"/>
           <include name="initialiseExtentReport"/>
+          <include name="doGetRequest"/>
           <include name="lunchBrowser"/>
           <include name="generateReport"/>
         </methods>
-      </class> <!-- UI.step.BrowseFacebookStep -->
+      </class> <!-- api.request.DoGetRequest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
