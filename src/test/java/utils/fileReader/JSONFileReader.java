@@ -1,5 +1,8 @@
 package utils.fileReader;
+
 import java.io.FileReader;
+import java.io.Reader;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -23,8 +26,18 @@ public class JSONFileReader {
 		JSONParser jsonParser = new JSONParser();
 		try (FileReader reader = new FileReader(file)) {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
-			T t=new Gson().fromJson(jsonObject.get(key).toString(), tClass);
+			T t = new Gson().fromJson(jsonObject.get(key).toString(), tClass);
 			return t;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public <T> T getValue(Class<T> t) {
+		Gson gson = new Gson();
+		try (Reader reader = new FileReader(getDataSetPath())) {
+			return gson.fromJson(reader, t);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
