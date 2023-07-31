@@ -9,6 +9,7 @@ import java.io.File;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
 import com.google.gson.Gson;
 
 import api.requestDTO.PostRequestBodyDTO;
@@ -17,6 +18,7 @@ import api.responseDTO.GetAPIResponseDTO.Employee;
 import api.responseDTO.PostAPIResponseDTO;
 import dataProvider.APIDataProvider;
 import io.restassured.RestAssured;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 import utils.fileReader.PropertiesReader;
 
@@ -33,7 +35,7 @@ public class DoPostRequest {
 		String endPoint = prop.getPropertyDetails(proFfilePath, "postAPIEndPoint");
 
 		RestAssured.baseURI = baseURL;
-		Response response = RestAssured.given().log().all().given().header("Content-Type", "application/json").and()
+		Response response = RestAssured.given().config(CurlLoggingRestAssuredConfigFactory.createConfig()).given().header("Content-Type", "application/json").and()
 				.body(new Gson().toJson(request)).when().post(endPoint).then().extract().response();
 		String formattedResponse = response.asString();
 		if (response.statusCode() == 200) {

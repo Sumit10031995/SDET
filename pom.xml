@@ -6,18 +6,18 @@
 	<artifactId>myautomation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+
 	<dependencies>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>4.4.0</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>4.6.0</version>
-		</dependency>
-		<!--
-        https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>json-schema-validator</artifactId>
-			<version>5.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -234,6 +234,22 @@
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 			<version>5.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.dzieciou.testing</groupId>
+			<artifactId>curl-logger</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.9</version>
 		</dependency>
 	</dependencies>
 

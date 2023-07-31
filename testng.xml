@@ -4,7 +4,7 @@
 	<test name="BrowseFacebookStep" thread-count="1">
 		<parameter name="browser" value="chrome"></parameter>
 		<classes>
-			<class name="UI.step.BrowseFacebookStep" />
+			<class name="api.request.DoGetRequest" />
 		</classes>
 	</test> <!--
 	Test -->

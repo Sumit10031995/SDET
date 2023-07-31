@@ -5,12 +5,7 @@
     <classes>
       <class name="api.request.DoGetRequest">
         <methods>
-          <include name="quitQuit"/>
-          <include name="checkStatus"/>
-          <include name="initialiseExtentReport"/>
           <include name="doGetRequest"/>
-          <include name="lunchBrowser"/>
-          <include name="generateReport"/>
         </methods>
       </class> <!-- api.request.DoGetRequest -->
     </classes>
