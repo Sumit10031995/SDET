@@ -34,7 +34,7 @@ public class GetAPIResponseDTO {
 		this.message = message;
 	}
 
-	public class Employee {
+	public static class Employee {
 		private int id;
 		private String employee_name;
 		private int employee_salary;
