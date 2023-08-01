@@ -4,10 +4,8 @@ import java.io.File;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
-
 import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
 import com.google.gson.Gson;
-
 import api.responseDTO.GetAPIResponseDTO;
 import api.responseDTO.GetAPIResponseDTO.Employee;
 import io.restassured.RestAssured;
@@ -26,7 +24,7 @@ public class DoGetRequest {
 		GetAPIResponseDTO getAPIResponseDTO = new GetAPIResponseDTO();
 		PropertiesReader prop = new PropertiesReader();
 		String endPoint = prop.getPropertyDetails(proFfilePath, "getAPIEndPoint");
-		RestAssured.baseURI = new HostFileReader().hosts().getName();
+		RestAssured.baseURI = new HostFileReader().getHosts().getName();
 		RestAssuredConfig config = CurlLoggingRestAssuredConfigFactory.createConfig(); 
 		Response response = RestAssured.given().config(config).given().header("Content-Type", "application/json").when()
 				.get(endPoint).then().extract().response();
