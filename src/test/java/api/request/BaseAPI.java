@@ -29,13 +29,10 @@ public class BaseAPI extends ExtentReportManager {
 		return map != null && map.size() != 0;
 	}
 
-	private static void printRequestLogInReport(RequestSpecification requestSpecification) {
+	private static void printRequestLogInReport(RequestSpecification requestSpecification,String endPoint) {
 		QueryableRequestSpecification specification = SpecificationQuerier.query(requestSpecification);
-		logInfo(specification.getBasePath());
-		logInfo(specification.getBaseUri());
-		logInfo(specification.getMethod());
-		logInfo(specification.getBody());
-		logInfo(specification.getHeaders().asList().toString());
+		logInfo(getCurlCommandFromRequestSpec(specification,endPoint));
+
 	}
 
 	private static void printResponseLogInReport(Response response) {
@@ -53,7 +50,7 @@ public class BaseAPI extends ExtentReportManager {
 	public static Response performGet(String endPoint, Map<String, String> headers) {
 		RequestSpecification requestSpecification = getRequestSpecefication(endPoint, "{}", headers);
 		Response response = requestSpecification.when().get(endPoint).then().extract().response();
-		printRequestLogInReport(requestSpecification);
+		printRequestLogInReport(requestSpecification,endPoint);
 		printResponseLogInReport(response);
 		return response;
 	}
@@ -61,7 +58,7 @@ public class BaseAPI extends ExtentReportManager {
 	public static Response performPost(String endPoint, String requestPayLoad, Map<String, String> headers) {
 		RequestSpecification requestSpecification = getRequestSpecefication(endPoint, requestPayLoad, headers);
 		Response response = requestSpecification.when().post(endPoint).then().extract().response();
-		printRequestLogInReport(requestSpecification);
+		printRequestLogInReport(requestSpecification,endPoint);
 		printResponseLogInReport(response);
 		return response;
 	}
@@ -69,7 +66,7 @@ public class BaseAPI extends ExtentReportManager {
 	public static Response performPut(String endPoint, String requestPayLoad, Map<String, String> headers) {
 		RequestSpecification requestSpecification = getRequestSpecefication(endPoint, requestPayLoad, headers);
 		Response response = requestSpecification.when().put(endPoint).then().extract().response();
-		printRequestLogInReport(requestSpecification);
+		printRequestLogInReport(requestSpecification,endPoint);
 		printResponseLogInReport(response);
 		return response;
 	}
@@ -77,8 +74,22 @@ public class BaseAPI extends ExtentReportManager {
 	public static Response performDelete(String endPoint, String requestPayLoad, Map<String, String> headers) {
 		RequestSpecification requestSpecification = getRequestSpecefication(endPoint, requestPayLoad, headers);
 		Response response = requestSpecification.when().delete(endPoint).then().extract().response();
-		printRequestLogInReport(requestSpecification);
+		printRequestLogInReport(requestSpecification,endPoint);
 		printResponseLogInReport(response);
 		return response;
+	}
+	
+
+	private static String getCurlCommandFromRequestSpec(QueryableRequestSpecification requestSpec, String endPoint) {
+		StringBuilder curlCommand = new StringBuilder("curl ");
+		curlCommand.append("'").append(requestSpec.getBaseUri() + endPoint).append("' ");
+		curlCommand.append(" -X " + requestSpec.getMethod()+" ");
+		requestSpec.getHeaders().asList().forEach(header -> curlCommand.append("-H '").append(header.getName())
+				.append(": ").append(header.getValue()).append("' "));
+		String requestBody = requestSpec.getBody();
+		if (requestBody != null && !requestBody.isEmpty()) {
+			curlCommand.append("-d '").append(requestBody.replace("'", "\\'")).append("' ");
+		}
+		return curlCommand.toString();
 	}
 }
