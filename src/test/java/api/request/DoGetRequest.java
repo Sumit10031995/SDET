@@ -7,17 +7,15 @@ import java.util.List;
 import org.testng.Assert;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
-import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
 import com.google.gson.Gson;
 import api.responseDTO.GetAPIResponseDTO;
 import api.responseDTO.GetAPIResponseDTO.Employee;
 import io.restassured.RestAssured;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 import utils.fileReader.HostFileReader;
 import utils.fileReader.PropertiesReader;
 
-public class DoGetRequest extends BaseAPI {
+public class DoGETRequest extends BaseAPI {
 	private static final String proFfilePath = "." + File.separator + "src" + File.separator + "property"
 			+ File.separator + "api.properties";
 	Gson gson = new Gson();

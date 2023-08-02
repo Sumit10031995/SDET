@@ -22,6 +22,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
@@ -30,8 +31,10 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import gherkin.deps.net.iharder.Base64.InputStream;
-
-public class BaseClass {
+import report.ExtentReportManager;
+import report.Setup;
+@Listeners(Setup.class)
+public class BaseClass extends ExtentReportManager{
 	private static final Logger logger = Logger.getLogger(BaseClass.class.getName());
 	protected static WebDriver driver = null;
 	public static ExtentReports extentReport;
@@ -44,7 +47,6 @@ public class BaseClass {
 	@BeforeTest
 	@Parameters("browser")
 	protected static void lunchBrowser(ITestContext context, @Optional("chrome") String browser) {
-		System.out.println("before test");
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
 		switch (browser) {
 		case "chrome": {
@@ -62,9 +64,6 @@ public class BaseClass {
 		}
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		extentTest = extentReport.createTest(context.getName());
-		Capabilities capabilities=((RemoteWebDriver) driver).getCapabilities();
-		String device=capabilities.getBrowserName()+","+capabilities.getBrowserVersion();
 		logger.info("Browser launched successfully");
 	}
 
@@ -75,23 +74,6 @@ public class BaseClass {
 
 	}
 
-	@BeforeSuite
-	protected void initialiseExtentReport() {
-		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(reportsFilePath);
-		sparkReporter.config().setDocumentTitle("My Test Report");
-		sparkReporter.config().setReportName("Test Execution Report");
-		sparkReporter.config().setCss(".r-img { width: 100%; height: auto; } .test { font-family: Arial, sans-serif; }");
-		sparkReporter.config().setEncoding("UTF-8");
-		sparkReporter.config().setTimeStampFormat("MMM dd, yyyy HH:mm:ss");
-		extentReport = new ExtentReports();
-		extentReport.attachReporter(sparkReporter);
-	}
-
-	@AfterSuite
-	protected void generateReport() {
-		extentReport.flush();
-		Desktop.getDesktop().browseFileDirectory(new File(reportsFilePath));
-	}
 
 	@AfterMethod
 	protected void checkStatus(ITestResult result) {
@@ -100,7 +82,7 @@ public class BaseClass {
 			if (result.getStatus() == ITestResult.FAILURE) {
 				File destFile = new File(screenshotsFilePath);
 				FileUtils.copyFile(srcFile, destFile);
-				extentTest.addScreenCaptureFromPath(destFile.getAbsolutePath());
+				Setup.extentTest.get().addScreenCaptureFromPath(destFile.getAbsolutePath());
 				extentTest.fail(result.getThrowable());
 				extentTest.fail(result.getMethod().getMethodName() + " IS FAIL");
 
@@ -113,9 +95,5 @@ public class BaseClass {
 
 	}
 
-	private InputStream FileInputStream(File srcFile) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
