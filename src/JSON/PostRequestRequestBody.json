@@ -8,5 +8,10 @@
     "name" : "test",
     "salary" : "123",
     "age" : "23"
+  },
+  "qa" : {
+    "name" : "test",
+    "salary" : "123",
+    "age" : "23"
   }
 }

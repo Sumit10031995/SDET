@@ -1,8 +1,10 @@
 package api.request;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
+import org.testng.Assert;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
@@ -22,13 +24,13 @@ public class DoGetRequest extends BaseAPI {
 
 	@Test(priority = 0)
 	public void doGetRequest() {
+
 		GetAPIResponseDTO getAPIResponseDTO = new GetAPIResponseDTO();
 		PropertiesReader prop = new PropertiesReader();
 		String endPoint = prop.getPropertyDetails(proFfilePath, "getAPIEndPoint");
 		RestAssured.baseURI = new HostFileReader().hosts().getName();
-		RestAssuredConfig config = CurlLoggingRestAssuredConfigFactory.createConfig();
-		Response response = RestAssured.given().config(config).given().header("Content-Type", "application/json").when()
-				.get(endPoint).then().extract().response();
+
+		Response response = performGet(endPoint, new HashMap());
 		String formattedResponse = response.asString();
 		if (response.statusCode() == 200) {
 			AssertJUnit.assertEquals(response.statusCode(), 200);
@@ -36,12 +38,14 @@ public class DoGetRequest extends BaseAPI {
 			List<Employee> name = getAPIResponseDTO.getData().stream()
 					.filter(n -> n.getEmployee_name().equals("Tiger Nixon")).toList();
 			if (isNotNullAndNotEmpty(name)) {
-				System.out.println(name.get(0).getEmployee_name());
+				logPass(name.get(0).getEmployee_name());
 			} else
-				AssertJUnit.assertTrue(false);
+				Assert.assertTrue(false);
+			logFail("TestCase Pass Fail");
 
 		} else
-			AssertJUnit.assertTrue(false);
+			logFail("TestCase Pass Fail");
+		Assert.assertTrue(false);
 
 	}
 
