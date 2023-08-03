@@ -3,7 +3,7 @@ package utils.uiUtility;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
-public class AlersHandeler {
+public class AlertHandeler {
 
 	public static void acceptAlert(WebDriver driver) {
         Alert alert = switchToAlert(driver);
