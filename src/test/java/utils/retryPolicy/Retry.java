@@ -13,5 +13,7 @@ public class Retry {
             .handle(AssertionError.class)
             .withDelay(Duration.ofMinutes(WAIT_DURATION_MIN))
             .withMaxRetries(MAX_ATTEMPTS);           
+    //Failsafe.with(retryPolicy).run(() -> {});
+
 }
 
