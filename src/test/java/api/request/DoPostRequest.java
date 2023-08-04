@@ -21,18 +21,17 @@ import io.restassured.RestAssured;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 import utils.fileReader.PropertiesReader;
+import utils.utility.Utility;
 
 public class DoPostRequest {
-	private static final String proFfilePath = "." + File.separator + "src" + File.separator + "property"
-			+ File.separator + "api.properties";
 	Gson gson = new Gson();
 
 	@Test(priority = 0, dataProvider = "API-POSTRequest-Body", dataProviderClass = APIDataProvider.class)
 	public void doGetRequest(PostRequestBodyDTO request) {
 		PostAPIResponseDTO postAPIResponseDTO = new PostAPIResponseDTO();
 		PropertiesReader prop = new PropertiesReader();
-		String baseURL = prop.getPropertyDetails(proFfilePath, "baseurl");
-		String endPoint = prop.getPropertyDetails(proFfilePath, "postAPIEndPoint");
+		String baseURL = prop.getPropertyDetails("baseurl");
+		String endPoint = prop.getPropertyDetails("postAPIEndPoint");
 
 		RestAssured.baseURI = baseURL;
 		Response response = RestAssured.given().config(CurlLoggingRestAssuredConfigFactory.createConfig()).given().header("Content-Type", "application/json").and()

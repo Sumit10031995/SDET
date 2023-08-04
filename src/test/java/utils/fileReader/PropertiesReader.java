@@ -1,22 +1,22 @@
 package utils.fileReader;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Properties;
+import utils.utility.Utility;
 
 public class PropertiesReader {
-	public synchronized String getPropertyDetails(String filePath,String key) {
+	private static final String filePath=Utility.searchFile("config.properties").getAbsolutePath();
+	
+	public static String getPropertyDetails(String key) {
 		Properties prop=new Properties();
 		try {
 			prop.load(new FileReader(filePath));
 			return prop.getProperty(key).toString();
 		
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
 }

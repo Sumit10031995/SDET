@@ -1,6 +1,4 @@
 package api.request;
-
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,8 +14,6 @@ import utils.fileReader.HostFileReader;
 import utils.fileReader.PropertiesReader;
 
 public class DoGETRequest extends BaseAPI {
-	private static final String proFfilePath = "." + File.separator + "src" + File.separator + "property"
-			+ File.separator + "api.properties";
 	Gson gson = new Gson();
 
 	@Test(priority = 0)
@@ -25,7 +21,7 @@ public class DoGETRequest extends BaseAPI {
 
 		GetAPIResponseDTO getAPIResponseDTO = new GetAPIResponseDTO();
 		PropertiesReader prop = new PropertiesReader();
-		String endPoint = prop.getPropertyDetails(proFfilePath, "getAPIEndPoint");
+		String endPoint = prop.getPropertyDetails("getAPIEndPoint");
 		RestAssured.baseURI = new HostFileReader().hosts().getName();
 
 		Response response = performGet(endPoint, new HashMap());

@@ -389,4 +389,47 @@ public class Utility {
 	        }
 	        return serealized;
 	    }
+	    
+	    public static File searchFile(String targetFileName) {
+	    	final File directory=new File("src");
+	        if (directory.isDirectory()) {
+	            File[] files = directory.listFiles();
+	            if (files != null) {
+	                for (File file : files) {
+	                    if (file.isDirectory()) {
+	                        File foundFile = searchFile(file, targetFileName);
+	                        if (foundFile != null) {
+	                            return foundFile;
+	                        }
+	                    } else {
+	                        if (file.getName().equalsIgnoreCase(targetFileName)) {
+	                            return file;
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	        return null;
+	    }
+	    
+	    public static File searchFile(File directory, String targetFileName) {
+	        if (directory.isDirectory()) {
+	            File[] files = directory.listFiles();
+	            if (files != null) {
+	                for (File file : files) {
+	                    if (file.isDirectory()) {
+	                        File foundFile = searchFile(file, targetFileName);
+	                        if (foundFile != null) {
+	                            return foundFile;
+	                        }
+	                    } else {
+	                        if (file.getName().equalsIgnoreCase(targetFileName)) {
+	                            return file;
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	        return null;
+	    }
 }

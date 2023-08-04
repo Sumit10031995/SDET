@@ -1,48 +1,36 @@
 package UI;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-
-import gherkin.deps.net.iharder.Base64.InputStream;
 import report.ExtentReportManager;
 import report.Setup;
+import utils.fileReader.PropertiesReader;
 @Listeners(Setup.class)
 public class BaseClass extends ExtentReportManager{
 	private static final Logger logger = Logger.getLogger(BaseClass.class.getName());
 	protected static WebDriver driver = null;
 	public static ExtentReports extentReport;
 	public static ExtentTest extentTest;
-	final String reportsFilePath = "." + File.separator + "src" + File.separator + "test-output"+ File.separator + "UIHTMLReports" + File.separator
-			+ "Report" + System.currentTimeMillis() + ".html";
-	final String screenshotsFilePath = "." + File.separator + "src" + File.separator + "test-output"+ File.separator + File.separator + "screenshot" + File.separator
-			+ "Report" + System.currentTimeMillis() + ".PNG";
+	final String screenshotsFilePath = PropertiesReader.getPropertyDetails("extent.reporter.screenshot.out")+ "Screenshot" + System.currentTimeMillis() + ".PNG";
 
 	@BeforeTest
 	@Parameters("browser")

@@ -1,16 +1,15 @@
 package report;
 
-import java.io.File;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
+import utils.fileReader.PropertiesReader;
+
 public class ExtentReportManager {
-	private static final String reportsFilePath = "." + File.separator + "src" + File.separator + "test-output"
-			+ File.separator + "UIHTMLReports" + File.separator + "Report" + System.currentTimeMillis() + ".html";
+	private static final String reportsFilePath = PropertiesReader.getPropertyDetails("extent.reporter.spark.out")+ "Report"+ System.currentTimeMillis() + ".html";
 	public static ExtentReports extentReport;
 
 	public static ExtentReports setExtentReportConfig() {

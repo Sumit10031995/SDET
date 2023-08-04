@@ -1,1 +1,0 @@
-{"uuid":"47c3f63c-7026-4f19-8ee9-c3543aaaadb3","name":"UI.BaseClass.checkStatus","children":["812764fc-505f-4b8f-acf9-0e6eeda4edce"],"description":"","befores":[],"afters":[{"name":"checkStatus","status":"broken","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1691007692550,"stop":1691007692550}],"start":1691007692550,"stop":1691007692551}

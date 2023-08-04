@@ -6,10 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+
+import utils.fileReader.PropertiesReader;
 
 public class WaitUtils {
-	private static final int time=20000;
+	private static int time;
+	 WaitUtils() {
+		time=Integer.parseInt(PropertiesReader.getPropertyDetails("duration"));
+	}
 
 	public static void visibilityOf(WebDriver driver, WebElement wb) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(time));

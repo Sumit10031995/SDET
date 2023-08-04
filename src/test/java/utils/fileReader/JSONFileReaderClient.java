@@ -1,10 +1,11 @@
 package utils.fileReader;
 
 import api.requestDTO.PostRequestBodyDTO;
+import utils.utility.Utility;
 
 public class JSONFileReaderClient extends JSONFileReader{
 	public String getDataSetPath() {
-		return "./src/JSON/PostRequestRequestBody.json";
+		return Utility.searchFile("PostRequestRequestBody.json").getAbsolutePath();
 	}
 	
 	   public PostRequestBodyDTO getPostRequestBody(String dataKey) {
