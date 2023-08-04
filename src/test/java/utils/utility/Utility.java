@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayDeque;
@@ -442,4 +443,64 @@ public class Utility {
 	        }
 	        return null;
 	    }
+	    
+		public static void writeTextsToFile(File filePath, String expTexts) {
+			try {
+				FileWriter writer = new FileWriter(filePath);
+				writer.append(expTexts);
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public static File createFolder(String targetFolder, String folderName) throws IOException {
+			File file = Utility.searchFolder(folderName);
+			if (file == null) {
+				File dir=createFolders(targetFolder, folderName);
+				if (dir!=null) {
+					file=dir;
+					System.out.println("New Folder \"" + folderName + "\" Created Successfully");
+				}
+				else
+					System.out.println("Folder \"" + folderName + "\" Not Created");
+
+			} else {
+				System.out.println("Folder \"" + folderName + "\" Already Exist");
+			}
+			return file;
+		}
+		
+		public static String captureStringAfterSpecificString(File input, String specificString) {
+			int index = input.getAbsolutePath().indexOf(specificString);
+			if (index != -1) {
+				index += specificString.length();
+				return input.getAbsolutePath().substring(index).trim();
+			}
+			return "";
+		}
+		
+		public static File createFolders(String target, String foldersName) {
+			boolean flag = false;
+			if (foldersName.contains(File.separator)) {
+				String files[] = foldersName.split(File.separator);
+				for (String dir : files) {
+					flag = false;
+					File fil = new File(target, dir);
+					if (fil.mkdir()) {
+						target += File.separator+dir;
+						flag = true;
+						System.out.println("Folder \""+dir+"\" Successfully Created");
+
+					}
+				}
+			} else {
+				File fil = new File(target, foldersName);
+				if (fil.mkdir()) {
+					flag = true;
+					System.out.println("Folder \""+foldersName+"\" Successfully Created");
+				}
+			}
+			return new File(target);
+		}
 }
