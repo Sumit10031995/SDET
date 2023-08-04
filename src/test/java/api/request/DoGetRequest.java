@@ -13,7 +13,7 @@ import io.restassured.response.Response;
 import utils.fileReader.HostFileReader;
 import utils.fileReader.PropertiesReader;
 
-public class DoGETRequest extends BaseAPI {
+public class DoGetRequest extends BaseAPI {
 	Gson gson = new Gson();
 
 	@Test(priority = 0)

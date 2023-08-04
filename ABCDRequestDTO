@@ -1,0 +1,8 @@
+package com.dunzo.api.clients.requestABCD;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+@Getter
+@Data
+@Builder(toBuilder = true)
+public class NewServiceRequestDTO{}

@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Utility {
+
 	public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -391,7 +392,11 @@ public class Utility {
 	    }
 	    
 	    public static File searchFile(String targetFileName) {
-	    	final File directory=new File("src");
+	    	final File file=new File("src");
+	        return searchFile(file, targetFileName);                  
+	    }
+	    
+	    public static File searchFile(File directory, String targetFileName) {
 	        if (directory.isDirectory()) {
 	            File[] files = directory.listFiles();
 	            if (files != null) {
@@ -412,19 +417,24 @@ public class Utility {
 	        return null;
 	    }
 	    
-	    public static File searchFile(File directory, String targetFileName) {
+		public static File searchFolder(String targetFolderName) {
+			final File file = new File("src");
+			return searchFolder(file, targetFolderName);
+		}
+	 	    
+	    
+	    
+	    public static File searchFolder(File directory, String targetFolderName) {
 	        if (directory.isDirectory()) {
-	            File[] files = directory.listFiles();
-	            if (files != null) {
-	                for (File file : files) {
-	                    if (file.isDirectory()) {
-	                        File foundFile = searchFile(file, targetFileName);
-	                        if (foundFile != null) {
-	                            return foundFile;
-	                        }
+	            File[] subdirectories = directory.listFiles(File::isDirectory);
+	            if (subdirectories != null) {
+	                for (File subdirectory : subdirectories) {
+	                    if (subdirectory.getName().equalsIgnoreCase(targetFolderName)) {
+	                        return subdirectory;
 	                    } else {
-	                        if (file.getName().equalsIgnoreCase(targetFileName)) {
-	                            return file;
+	                        File foundFolder = searchFolder(subdirectory, targetFolderName);
+	                        if (foundFolder != null) {
+	                            return foundFolder;
 	                        }
 	                    }
 	                }
