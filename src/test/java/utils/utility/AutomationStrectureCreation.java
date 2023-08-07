@@ -43,21 +43,23 @@ public class AutomationStrectureCreation {
 			String body = doPOJOCreation(curlDetails.get("body").toString(), config.requestFileName);
 			String response = doPOJOCreation(responseDto, config.responseFileName);
 
+            //Request DTO
 			File requestFolder = FileManager.searchFile(config.targetFolder, config.folderToCreateRequestDTO);
-			File responseFolder = FileManager.searchFile(config.targetFolder, config.folderToCreateResponseDTO);
-			File testFolder = FileManager.searchFile(config.targetFolder, config.apiTtests);
-
 			File requestDTO = new File(requestFolder, config.requestFileName);
 			String requestDetails = "package "
 					+ Utility.captureStringAfterSpecificString(requestFolder, "java/").replace("/", ".") + ";\n" + body;
 			FileManager.writeTextsToFile(requestDTO, requestDetails);
-
+			
+            //Response DTO
+			File responseFolder = FileManager.searchFile(config.targetFolder, config.folderToCreateResponseDTO);
 			File responseDTO = new File(responseFolder, config.responseFileName);
 			String responseDetails = "package "
 					+ Utility.captureStringAfterSpecificString(responseFolder, "java/").replace("/", ".") + ";\n"
 					+ response;
 			FileManager.writeTextsToFile(responseDTO, responseDetails);
-
+			
+            //Test
+			File testFolder = FileManager.searchFile(config.targetFolder, config.apiTtests);
 			File tests = new File(testFolder, config.testFileName);
 			String testDetails = "package "
 					+ Utility.captureStringAfterSpecificString(testFolder, "java/").replace("/", ".") +";\n"
@@ -159,7 +161,6 @@ public class AutomationStrectureCreation {
 	}
 
 	private static String getRequestMethod(String httpMethod) {
-		// BaseAPI
 		switch (httpMethod.toLowerCase()) {
 		case "get": {
 			return "String response=BaseAPI.performGet(url,header);";

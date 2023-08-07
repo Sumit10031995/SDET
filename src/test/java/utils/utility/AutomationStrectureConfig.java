@@ -20,6 +20,6 @@ public class AutomationStrectureConfig {
 		this.targetFolder = "src" + File.separator + "test" + File.separator + "java" + File.separator + "api"+File.separator ;
 		this.folderToCreateRequestDTO = "clients" + File.separator + serviceName;
 		this.folderToCreateResponseDTO = "clients" + File.separator + serviceName;
-		this.apiTtests = "tests";
+		this.apiTtests = "tests"+File.separator + serviceName;
 	}
 }
