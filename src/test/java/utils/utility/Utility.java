@@ -14,10 +14,14 @@ import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
+
+import org.testng.annotations.Test;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -54,7 +58,7 @@ public class Utility {
 //	        expDataList.add(values);
 //	        return expDataList;
 //	    }
-	
+
 	 public void removeColumn(List<List<String>> expData, String clmName) {
 	        List<String> columnDetails = new ArrayList();
 	        Integer pointer = null;
@@ -392,10 +396,7 @@ public class Utility {
 	        return serealized;
 	    }
 	    
-	    public static File searchFile(String targetFileName) {
-	    	final File file=new File("src");
-	        return searchFile(file, targetFileName);                  
-	    }
+	
 	    
 	    public static File searchFile(File directory, String targetFileName) {
 	        if (directory.isDirectory()) {
@@ -418,12 +419,36 @@ public class Utility {
 	        return null;
 	    }
 	    
-		public static File searchFolder(String targetFolderName) {
-			final File file = new File("src");
-			return searchFolder(file, targetFolderName);
-		}
-	 	    
+	    public static File searchFile(String targetFile) {
+	    	String[] arr;
+			if (targetFile.contains(File.separator)) {
+				arr = targetFile.split(File.separator);
+			   return (searchFile(arr[0])==null)? createFolders("src",targetFile): searchFile( arr[arr.length - 1]);
+
+
+			} else {
+				 File file = new File("src");
+				return searchFile(file, targetFile);
+			}                 
+	    }
 	    
+	    public static File searchFolder(String targetFolder) {
+	    	String[] arr;
+			if (targetFolder.contains(File.separator)) {
+				arr = targetFolder.split(File.separator);
+				return (searchFolder(arr[0])==null)?createFolders("src",targetFolder): searchFolder( arr[arr.length - 1]);
+
+
+			} else {
+				 File file = new File("src");
+				return searchFolder(file, targetFolder);
+			}                 
+	    }
+	 	    
+	    @Test
+	    public void ssss() {
+	    	System.out.println(searchFolder(searchFolder("clients"),"APIServiceQA"));
+	    }
 	    
 	    public static File searchFolder(File directory, String targetFolderName) {
 	        if (directory.isDirectory()) {
@@ -460,7 +485,7 @@ public class Utility {
 				File dir=createFolders(targetFolder, folderName);
 				if (dir!=null) {
 					file=dir;
-					System.out.println("New Folder \"" + folderName + "\" Created Successfully");
+					//System.out.println("New Folder \"" + folderName + "\" Created Successfully");
 				}
 				else
 					System.out.println("Folder \"" + folderName + "\" Not Created");
@@ -470,6 +495,7 @@ public class Utility {
 			}
 			return file;
 		}
+		
 		
 		public static String captureStringAfterSpecificString(File input, String specificString) {
 			int index = input.getAbsolutePath().indexOf(specificString);
@@ -503,4 +529,25 @@ public class Utility {
 			}
 			return new File(target);
 		}
+		
+		  private static String firstCharToUpperrCase(String str) {
+
+		        if (str == null || str.length() == 0)
+		            return "";
+
+		        if (str.length() == 1)
+		            return str.toLowerCase();
+
+		        return str.substring(0, 1).toLowerCase() + str.substring(1, str.length());
+		    }
+		  
+		    public static boolean isValidCurlFormat(String curlCommand) {
+		        String curlPattern = "^curl\\s+--location\\s+'http[^']+'\\\\\n"
+		                           + "\\s*--request\\s+POST\\\\\n"
+		                           + "\\s*--header\\s+'Content-Type:\\s+application/json'\\\\\n"
+		                           + "\\s*--data\\s+'\\{[^}]+\\}'$";
+		        Pattern pattern = Pattern.compile(curlPattern, Pattern.MULTILINE);
+		        Matcher matcher = pattern.matcher(curlCommand);
+		        return matcher.matches();
+		    }
 }

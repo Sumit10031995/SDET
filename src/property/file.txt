@@ -1,0 +1,27 @@
+
+package codeusingjava;
+import java.util.HashMap;
+import java.util.Map;
+public class Root {
+    private String name;
+    private Integer age;
+    private Object car;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Integer getAge() {
+        return age;
+    }
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+    public Object getCar() {
+        return car;
+    }
+    public void setCar(Object car) {
+        this.car = car;
+    }
+}

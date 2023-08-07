@@ -1,10 +1,17 @@
 package api.responseDTO;
 
-import lombok.Getter;
-import lombok.Setter;
 import java.util.*;
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
+@Data
+@Builder(toBuilder = true)
 public class GetAPIResponseDTO {
 	private String status;
 	private List<Employee> data;
@@ -33,7 +40,8 @@ public class GetAPIResponseDTO {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	@Builder(toBuilder = true)
+	@Data
 	public static class Employee {
 		private int id;
 		private String employee_name;
@@ -41,10 +49,7 @@ public class GetAPIResponseDTO {
 		private int employee_age;
 		private String profile_image;
 
-		public int getId() {
-			return id;
-		}
-
+		
 		public void setId(int id) {
 			this.id = id;
 		}

@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="api.request.DoGETRequest">
+      <class name="utils.utility.AutomationStrectureCreation">
         <methods>
-          <include name="doGetRequest"/>
+          <include name="main"/>
         </methods>
-      </class> <!-- api.request.DoGETRequest -->
+      </class> <!-- utils.utility.AutomationStrectureCreation -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
