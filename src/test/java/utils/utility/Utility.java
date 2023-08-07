@@ -397,106 +397,6 @@ public class Utility {
 	    }
 	    
 	
-	    
-	    public static File searchFile(File directory, String targetFileName) {
-	        if (directory.isDirectory()) {
-	            File[] files = directory.listFiles();
-	            if (files != null) {
-	                for (File file : files) {
-	                    if (file.isDirectory()) {
-	                        File foundFile = searchFile(file, targetFileName);
-	                        if (foundFile != null) {
-	                            return foundFile;
-	                        }
-	                    } else {
-	                        if (file.getName().equalsIgnoreCase(targetFileName)) {
-	                            return file;
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	        return null;
-	    }
-	    
-	    public static File searchFile(String targetFile) {
-	    	String[] arr;
-			if (targetFile.contains(File.separator)) {
-				arr = targetFile.split(File.separator);
-			   return (searchFile(arr[0])==null)? createFolders("src",targetFile): searchFile( arr[arr.length - 1]);
-
-
-			} else {
-				 File file = new File("src");
-				return searchFile(file, targetFile);
-			}                 
-	    }
-	    
-	    public static File searchFolder(String targetFolder) {
-	    	String[] arr;
-			if (targetFolder.contains(File.separator)) {
-				arr = targetFolder.split(File.separator);
-				return (searchFolder(arr[0])==null)?createFolders("src",targetFolder): searchFolder( arr[arr.length - 1]);
-
-
-			} else {
-				 File file = new File("src");
-				return searchFolder(file, targetFolder);
-			}                 
-	    }
-	 	    
-	    @Test
-	    public void ssss() {
-	    	System.out.println(searchFolder(searchFolder("clients"),"APIServiceQA"));
-	    }
-	    
-	    public static File searchFolder(File directory, String targetFolderName) {
-	        if (directory.isDirectory()) {
-	            File[] subdirectories = directory.listFiles(File::isDirectory);
-	            if (subdirectories != null) {
-	                for (File subdirectory : subdirectories) {
-	                    if (subdirectory.getName().equalsIgnoreCase(targetFolderName)) {
-	                        return subdirectory;
-	                    } else {
-	                        File foundFolder = searchFolder(subdirectory, targetFolderName);
-	                        if (foundFolder != null) {
-	                            return foundFolder;
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	        return null;
-	    }
-	    
-		public static void writeTextsToFile(File filePath, String expTexts) {
-			try {
-				FileWriter writer = new FileWriter(filePath);
-				writer.append(expTexts);
-				writer.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		public static File createFolder(String targetFolder, String folderName) throws IOException {
-			File file = Utility.searchFolder(folderName);
-			if (file == null) {
-				File dir=createFolders(targetFolder, folderName);
-				if (dir!=null) {
-					file=dir;
-					//System.out.println("New Folder \"" + folderName + "\" Created Successfully");
-				}
-				else
-					System.out.println("Folder \"" + folderName + "\" Not Created");
-
-			} else {
-				System.out.println("Folder \"" + folderName + "\" Already Exist");
-			}
-			return file;
-		}
-		
-		
 		public static String captureStringAfterSpecificString(File input, String specificString) {
 			int index = input.getAbsolutePath().indexOf(specificString);
 			if (index != -1) {
@@ -505,41 +405,6 @@ public class Utility {
 			}
 			return "";
 		}
-		
-		public static File createFolders(String target, String foldersName) {
-			boolean flag = false;
-			if (foldersName.contains(File.separator)) {
-				String files[] = foldersName.split(File.separator);
-				for (String dir : files) {
-					flag = false;
-					File fil = new File(target, dir);
-					if (fil.mkdir()) {
-						target += File.separator+dir;
-						flag = true;
-						System.out.println("Folder \""+dir+"\" Successfully Created");
-
-					}
-				}
-			} else {
-				File fil = new File(target, foldersName);
-				if (fil.mkdir()) {
-					flag = true;
-					System.out.println("Folder \""+foldersName+"\" Successfully Created");
-				}
-			}
-			return new File(target);
-		}
-		
-		  private static String firstCharToUpperrCase(String str) {
-
-		        if (str == null || str.length() == 0)
-		            return "";
-
-		        if (str.length() == 1)
-		            return str.toLowerCase();
-
-		        return str.substring(0, 1).toLowerCase() + str.substring(1, str.length());
-		    }
 		  
 		    public static boolean isValidCurlFormat(String curlCommand) {
 		        String curlPattern = "^curl\\s+--location\\s+'http[^']+'\\\\\n"
@@ -550,4 +415,14 @@ public class Utility {
 		        Matcher matcher = pattern.matcher(curlCommand);
 		        return matcher.matches();
 		    }
+			  private static String firstCharToUpperrCase(String str) {
+
+			        if (str == null || str.length() == 0)
+			            return "";
+
+			        if (str.length() == 1)
+			            return str.toLowerCase();
+
+			        return str.substring(0, 1).toLowerCase() + str.substring(1, str.length());
+			    }
 }

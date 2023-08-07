@@ -10,14 +10,14 @@ public class AutomationStrectureConfig {
 	static String targetFolder;
 	static String folderToCreateRequestDTO;
 	static String folderToCreateResponseDTO;
-	static String apiTtests = "tests";
+	static String apiTtests ;
 
 	AutomationStrectureConfig(String serviceName) {
 		this.serviceName = serviceName;
-		testFileName = serviceName + "Tests.java";
+		this.testFileName = serviceName + "Tests.java";
 		this.requestFileName = serviceName + "RequestDTO.java";
 		this.responseFileName = serviceName + "ResponseDTO.java";
-		this.targetFolder = "src" + File.separator + "test" + File.separator + "java" + File.separator + "api";
+		this.targetFolder = "src" + File.separator + "test" + File.separator + "java" + File.separator + "api"+File.separator ;
 		this.folderToCreateRequestDTO = "clients" + File.separator + serviceName;
 		this.folderToCreateResponseDTO = "clients" + File.separator + serviceName;
 		this.apiTtests = "tests";

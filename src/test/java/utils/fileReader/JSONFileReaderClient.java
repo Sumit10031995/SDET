@@ -5,7 +5,7 @@ import utils.utility.Utility;
 
 public class JSONFileReaderClient extends JSONFileReader{
 	public String getDataSetPath() {
-		return Utility.searchFile("PostRequestRequestBody.json").getAbsolutePath();
+		return FileManager.searchFile("PostRequestRequestBody.json").getAbsolutePath();
 	}
 	
 	   public PostRequestBodyDTO getPostRequestBody(String dataKey) {

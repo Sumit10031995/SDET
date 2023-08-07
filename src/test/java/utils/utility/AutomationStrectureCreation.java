@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import utils.fileReader.FileManager;
 import utils.fileReader.PropertiesReader;
 
 public class AutomationStrectureCreation {
@@ -42,34 +43,46 @@ public class AutomationStrectureCreation {
 			String body = doPOJOCreation(curlDetails.get("body").toString(), config.requestFileName);
 			String response = doPOJOCreation(responseDto, config.responseFileName);
 
-			File requestFolder = Utility.createFolder(config.targetFolder, config.folderToCreateRequestDTO);
-			File responseFolder = Utility.createFolder(config.targetFolder, config.folderToCreateResponseDTO);
-			File testFolder = Utility.createFolder(config.targetFolder, config.apiTtests);
+			File requestFolder = FileManager.searchFile(config.targetFolder, config.folderToCreateRequestDTO);
+			File responseFolder = FileManager.searchFile(config.targetFolder, config.folderToCreateResponseDTO);
+			File testFolder = FileManager.searchFile(config.targetFolder, config.apiTtests);
 
 			File requestDTO = new File(requestFolder, config.requestFileName);
 			String requestDetails = "package "
 					+ Utility.captureStringAfterSpecificString(requestFolder, "java/").replace("/", ".") + ";\n" + body;
-			Utility.writeTextsToFile(requestDTO, requestDetails);
+			FileManager.writeTextsToFile(requestDTO, requestDetails);
 
 			File responseDTO = new File(responseFolder, config.responseFileName);
 			String responseDetails = "package "
 					+ Utility.captureStringAfterSpecificString(responseFolder, "java/").replace("/", ".") + ";\n"
 					+ response;
-			Utility.writeTextsToFile(responseDTO, responseDetails);
+			FileManager.writeTextsToFile(responseDTO, responseDetails);
 
 			File tests = new File(testFolder, config.testFileName);
 			String testDetails = "package "
-					+ Utility.captureStringAfterSpecificString(testFolder, "java/").replace("/", ".") + ";\n"
-					+ "import lombok.Builder;\n" + "import lombok.Data;\n" + "import lombok.Getter;\n" + "@Getter\n"
-					+ "@Data\n" + "@Builder(toBuilder = true)\n" + "public class " + config.responseFileName + "{\n"
-					+ config.responseFileName + " " + firstCharToLowerCase(config.responseFileName) + " =new "
-					+ config.responseFileName + "();\n"
-					+ getRequestMethod(getCurlDetails(curl).get("method").toString()) + ";\n"
-					+ "		String formattedResponse = response.asString();\n"
-					+ "		if (response.statusCode() == 200) {\n"
-					+ "			firstCharToLowerCase(responseFileName) = gson.fromJson(formattedResponse, responseFileName.class);\n}";
+					+ Utility.captureStringAfterSpecificString(testFolder, "java/").replace("/", ".") +";\n"
+					+"import "+Utility.captureStringAfterSpecificString(responseDTO, "java/").replace("/", ".") +";\n"
+					+ "import java.util.HashMap;\n"
+	                + "import org.testng.annotations.Test;\n"
+	                + "import com.google.gson.Gson;\n"
+	                + "import api.request.BaseAPI;\n"
+	                + "import io.restassured.response.Response;\n"
+	                + "\n"
+	                + "public class "+config.testFileName.replace(".java", "")+" {\n"
+	                + "\t@Test\n"
+	                + "\tpublic void test() {\n"
+	                + "\t\tGson gson = new Gson();\n"
+	                + "\t\t"+config.responseFileName.replace(".java", "") +" "+ firstCharToLowerCase(config.responseFileName).replace(".java", "") + " =new "+config.responseFileName.replace(".java", "") +"();\n"
+	                + "\t\tResponse response = BaseAPI.performPost(\"url\", \"header\", new HashMap());\n"
+	                + "\t\tString formattedResponse = response.asString();\n"
+	                + "\t\tif (response.statusCode() == 200) {\n"
+	                + "\t\t\t"+firstCharToLowerCase(config.responseFileName).replace(".java", "")+" = gson.fromJson(formattedResponse, "+config.responseFileName+".class);\n"
+	                + "\t\t}\n"
+	                + "\t}\n"
+	                + "}";
+			
 
-			Utility.writeTextsToFile(tests, testDetails);
+			FileManager.writeTextsToFile(tests, testDetails);
 
 			System.out.println("Files Successfully Created");
 		} catch (Exception e) {
@@ -122,12 +135,12 @@ public class AutomationStrectureCreation {
 		expRequestBody.put("jsonText", requestBody);
 		ObjectMapper objectMapper = new ObjectMapper();
 		String url = PropertiesReader.getPropertyDetails("api.convertTo.POJO");
-		String cookieHeader = "_gid=GA1.2.485604522.1691280896; __ppIdCC=xoseuaibfhwcw_xon210.16898.7097; _pbjs_userid_consent_data=3524755945110770; sharedid=c4dc49be-34f6-4e41-bf7b-7de10916a618; cto_bundle=86XZ9V9RU05ENWZvJTJGSXByaXgxYlZpcyUyQnRKQjR3JTJCU0VLMUlWWTVQeUVUQSUyRlBmUGJyVUhscGdNWXdGdDBsVHk1VDlqUEw3TlUzdm9GemVLYTVUQWE0R1FNM2REdmczR0k4V0JKSXZwRHY5ZjBnWmFYWGJrcDlBNkk0TmJYeExXdk95cGRGVzhHTUpkV1JiRXBFeXIxZmZoR1MxVVk2cXNTRlA5Z2ZkWGxMenNSd2VTTHA1YWg4amxpdU45MEV1bzdvSDdoJTJGR1RaMERXUEw2MURXMDBWbzNZMVBydyUzRCUzRA; cto_bidid=qN-GWF9zdmtnVVlXanhqQ1JLS0VhNTNNTVVZNWxwWlRRcVJ4dnJUT3RoY3RzT0hyZnloWDNjWUFLWk9qNHhFMHFuSGY0eEVaTXpDZndmZUN5SW9iRXoyQ3dJS2NmSjdJeiUyRlpxZlJ6R1BzWFUxZXFmJTJCWFI5bFdGc0tDJTJGRDlqZDgzcG0waVBFQUUyc0dFd1FySE9mUGJnMkZZMUElM0QlM0Q; JSESSIONID=1AEAFF8A6EC450C8BA284779410F3053; _gat_gtag_UA_158277904_1=1; _ga_34Y2XZBFHV=GS1.1.1691359052.5.1.1691359053.0.0.0; _ga=GA1.1.743020840.1691280896; __viCookieActive=true; __gads=ID=2316400f668918d1-22b25fd2558000fd:T=1691280898:RT=1691359053:S=ALNI_MYkG92hBWm0Kmcdx8xhuuRAp074rg; __gpi=UID=00000c277847858f:T=1691280898:RT=1691359053:S=ALNI_MbyOPrKMxH3JkH1jts6bMtPZHhkew; amp_6e403e=i-rkk1eOVw9lvcQey9y5t2...1h76dm26o.1h76dm26o.0.0.0";
+		String cookieHeader = "_gid=GA1.2.485604522.1691280896; __ppIdCC=xoseuaibfhwcw_xon210.16898.7097; _pbjs_userid_consent_data=3524755945110770; sharedid=c4dc49be-34f6-4e41-bf7b-7de10916a618; JSESSIONID=94AFD0D1E26B4B20F3321AC3240863DE; _gat_gtag_UA_158277904_1=1; _ga_34Y2XZBFHV=GS1.1.1691396770.7.1.1691396770.0.0.0; _ga=GA1.1.743020840.1691280896; __viCookieActive=true; amp_6e403e=i-rkk1eOVw9lvcQey9y5t2...1h77hl44n.1h77hl44n.0.0.0; __gads=ID=2316400f668918d1-22b25fd2558000fd:T=1691280898:RT=1691396771:S=ALNI_MYkG92hBWm0Kmcdx8xhuuRAp074rg; __gpi=UID=00000c277847858f:T=1691280898:RT=1691396771:S=ALNI_MbyOPrKMxH3JkH1jts6bMtPZHhkew; cto_bundle=3oU13V9RU05ENWZvJTJGSXByaXgxYlZpcyUyQnRKTFN2bldqVXNoUUhUVCUyRk1pS25hSVo3Q1hWcDdvbXJmMFpCZFV1eWVkbUFsY0JTUkZzaXVuMmxVY01RVDMzNXZmTkk4bXM0R3EyeUVpa3JhbEwlMkI3d0lBbVBBJTJCTDRkTUElMkY0SmE1VFFNUzJ1cmtJUmFQM090Z1VUN1dKYlBmclJ0MW0zUFpZOWQ5T2VvSmRDeGNKUGtTd2VBRzZnazVIelYxOERZaUJ4dCUyQk41c0NhTnRoSTljOUc0V0dYTTJFeWZDYUElM0QlM0Q; cto_bidid=6vPHKV9zdmtnVVlXanhqQ1JLS0VhNTNNTVVZNWxwWlRRcVJ4dnJUT3RoY3RzT0hyZnloWDNjWUFLWk9qNHhFMHFuSGY0eEVaTXpDZndmZUN5SW9iRXoyQ3dJRmhaYjZuc3RwdzN2ZlZXRGxXSjY0MFNtRmVGdW42V3pocG45VmhKbzQlMkJWRnRDZjM0TzNKRjJFTmZ0Rjl3WHNIUSUzRCUzRA";
 		try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
 			HttpPost request = new HttpPost("https://www.codeusingjava.com/createpojo");
 			request.addHeader("Content-Type", "application/json;charset=UTF-8");
 			request.addHeader("Cookie", cookieHeader);
-			request.addHeader("X-CSRF-TOKEN", "1413d189-4e2c-4dfd-88c1-c53f0e711cf4");
+			request.addHeader("X-CSRF-TOKEN", "fc6c67ca-36de-4f56-8f82-4b0d222b7700");
 			StringEntity entity = new StringEntity(
 					objectMapper.writeValueAsString(expRequestBody));
 			request.setEntity(entity);
@@ -137,7 +150,7 @@ public class AutomationStrectureCreation {
 				String responseBody = EntityUtils.toString(responseEntity);
 				int statusCode = response.getStatusLine().getStatusCode();
 				if (statusCode == 200)
-					return responseBody.replace("Root", className);
+					return objectMapper.readTree(responseBody.replace("Root", className).replace("package codeusingjava;\\n", "")).get(0).asText();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,16 +162,16 @@ public class AutomationStrectureCreation {
 		// BaseAPI
 		switch (httpMethod.toLowerCase()) {
 		case "get": {
-			return "String response=BaseAPI.performGet(httpMethod,header);";
+			return "String response=BaseAPI.performGet(url,header);";
 		}
 		case "post": {
-			return "String response=BaseAPI.performPost(httpMethod, requestPayload, header);";
+			return "String response=BaseAPI.performPost(url, requestPayload, header);";
 		}
 		case "put": {
-			return "String response= =BaseAPI.performPut(httpMethod, requestPayload, header);";
+			return "String response= =BaseAPI.performPut(url, requestPayload, header);";
 		}
 		case "delete": {
-			return "String response= BaseAPI.performDelete(httpMethod, requestPayload, header);";
+			return "String response= BaseAPI.performDelete(url, requestPayload, header);";
 		}
 		}
 		return httpMethod;

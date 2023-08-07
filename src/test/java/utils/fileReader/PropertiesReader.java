@@ -5,7 +5,7 @@ import java.util.Properties;
 import utils.utility.Utility;
 
 public class PropertiesReader {
-	private static final String filePath=Utility.searchFile("config.properties").getAbsolutePath();
+	private static final String filePath=FileManager.searchFile("config.properties").getAbsolutePath();
 	
 	public static String getPropertyDetails(String key) {
 		Properties prop=new Properties();

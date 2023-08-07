@@ -2,7 +2,7 @@ package utils.fileReader;
 import utils.utility.Utility;
 
 public class HostFileReader extends JSONFileReader {
-	private static final String hostFilePath =Utility.searchFile("Hosts.json").getAbsolutePath();
+	private static final String hostFilePath =FileManager.searchFile("Hosts.json").getAbsolutePath();
 	
 	public String getDataSetPath() {
 		return hostFilePath;
