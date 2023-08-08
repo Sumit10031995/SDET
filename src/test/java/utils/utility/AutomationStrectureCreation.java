@@ -85,8 +85,6 @@ public class AutomationStrectureCreation {
 			
 
 			FileManager.writeTextsToFile(tests, testDetails);
-
-			System.out.println("Files Successfully Created");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

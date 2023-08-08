@@ -6,7 +6,14 @@ import java.util.Map;
 import org.testng.annotations.Listeners;
 
 import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.github.fge.jsonschema.main.JsonSchema;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
+import java.io.IOException;
+import java.net.URL;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -15,8 +22,10 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.SpecificationQuerier;
 import report.ExtentReportManager;
 import report.Setup;
+import utils.fileReader.FileManager;
 @Listeners(Setup.class)
 public class BaseAPI extends ExtentReportManager {
+	private final static String apiSchema=FileManager.searchFile("apiSchema.json").getAbsolutePath();
 	public static boolean isNotNullAndNotEmpty(String str) {
 		return str != null && !str.isEmpty();
 	}
@@ -91,5 +100,18 @@ public class BaseAPI extends ExtentReportManager {
 			curlCommand.append("-d '").append(requestBody.replace("'", "\\'")).append("' ");
 		}
 		return curlCommand.toString();
+	}
+	
+	private static void validateAPISchema(String apiResponse, String schemaPath) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode responseNode = objectMapper.readTree(apiResponse);
+			JsonNode schemaNode = objectMapper.readTree(new URL("file://" + apiSchema));
+			JsonSchemaFactory schemaFactory = JsonSchemaFactory.byDefault();
+			JsonSchema schema = schemaFactory.getJsonSchema(schemaNode);
+			schema.validate(responseNode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
