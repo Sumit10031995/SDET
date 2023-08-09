@@ -3,7 +3,13 @@ package utils.fileReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class FileManager {
     
     
@@ -165,5 +171,26 @@ public class FileManager {
 		System.out.println(target);
 		return new File(target);
 	}
-	 
+	
+	
+	public static List<String> getLogs(String filePath, String keyword) {
+        List<String> retryLogs = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
+
+            while ((line = reader.readLine()) != null) {
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    retryLogs.add(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return retryLogs;
+    }
+
 }

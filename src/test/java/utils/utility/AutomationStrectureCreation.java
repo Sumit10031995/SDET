@@ -27,17 +27,16 @@ public class AutomationStrectureCreation {
 	
 	public static void main(String[] args) {
 		/**
-		 * NOTE:-curl --location 'http[url]' --request POST --header 'key:value' --data
-		 * {}
+		 * NOTE:-curl --location 'http[url]' --request POST --header 'key:value' --data{}
 		 **/
 		String curl = "curl --location  'http://catalog-service-ink10art.dev.dunzo.com/api/v2/product-grouping-details' \\\n"
 				+ "--request POST \n" + "--header 'Content-Type: file' \\\n"
 				+ "--data '{\"dzid\":\"f7c37860-8024-4298-8c62-74f8c066b6b6\",\"show_age_restricted\":true,\"filter_oos\":false,\"product_grouping_ids\":[\"64c21727e024c2683c0626fa\"]}'";
 		String responseDto = "{\n" + "  \"categories\": [\"Qa-cat1\"],\n" + "  \"show_age_restricted\": true\n" + "}";
-		createAPIRequestStrecture(curl, responseDto);
+		writeToPOJO(curl, responseDto);
 	}
 
-	public static void createAPIRequestStrecture(String curl, String responseDto) {
+	public static void writeToPOJO(String curl, String responseDto) {
 		try {
 			Map<String, Object> curlDetails = getCurlDetails(curl);
 			String body = doPOJOCreation(curlDetails.get("body").toString(), config.requestFileName);
@@ -130,9 +129,9 @@ public class AutomationStrectureCreation {
 	}
 
 	// https://www.codeusingjava.com/tools/jsontopojo
-	private static String doPOJOCreation(String requestBody, String className) {
+	private static String doPOJOCreation(String jsonString, String className) {
 		Map expRequestBody = new HashMap();
-		expRequestBody.put("jsonText", requestBody);
+		expRequestBody.put("jsonText", jsonString);
 		ObjectMapper objectMapper = new ObjectMapper();
 		String url = PropertiesReader.getPropertyDetails("api.convertTo.POJO");
 		String cookieHeader = "_gid=GA1.2.485604522.1691280896; __ppIdCC=xoseuaibfhwcw_xon210.16898.7097; _pbjs_userid_consent_data=3524755945110770; sharedid=c4dc49be-34f6-4e41-bf7b-7de10916a618; JSESSIONID=94AFD0D1E26B4B20F3321AC3240863DE; _gat_gtag_UA_158277904_1=1; _ga_34Y2XZBFHV=GS1.1.1691396770.7.1.1691396770.0.0.0; _ga=GA1.1.743020840.1691280896; __viCookieActive=true; amp_6e403e=i-rkk1eOVw9lvcQey9y5t2...1h77hl44n.1h77hl44n.0.0.0; __gads=ID=2316400f668918d1-22b25fd2558000fd:T=1691280898:RT=1691396771:S=ALNI_MYkG92hBWm0Kmcdx8xhuuRAp074rg; __gpi=UID=00000c277847858f:T=1691280898:RT=1691396771:S=ALNI_MbyOPrKMxH3JkH1jts6bMtPZHhkew; cto_bundle=3oU13V9RU05ENWZvJTJGSXByaXgxYlZpcyUyQnRKTFN2bldqVXNoUUhUVCUyRk1pS25hSVo3Q1hWcDdvbXJmMFpCZFV1eWVkbUFsY0JTUkZzaXVuMmxVY01RVDMzNXZmTkk4bXM0R3EyeUVpa3JhbEwlMkI3d0lBbVBBJTJCTDRkTUElMkY0SmE1VFFNUzJ1cmtJUmFQM090Z1VUN1dKYlBmclJ0MW0zUFpZOWQ5T2VvSmRDeGNKUGtTd2VBRzZnazVIelYxOERZaUJ4dCUyQk41c0NhTnRoSTljOUc0V0dYTTJFeWZDYUElM0QlM0Q; cto_bidid=6vPHKV9zdmtnVVlXanhqQ1JLS0VhNTNNTVVZNWxwWlRRcVJ4dnJUT3RoY3RzT0hyZnloWDNjWUFLWk9qNHhFMHFuSGY0eEVaTXpDZndmZUN5SW9iRXoyQ3dJRmhaYjZuc3RwdzN2ZlZXRGxXSjY0MFNtRmVGdW42V3pocG45VmhKbzQlMkJWRnRDZjM0TzNKRjJFTmZ0Rjl3WHNIUSUzRCUzRA";

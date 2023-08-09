@@ -32,7 +32,7 @@ public class BaseClass extends ExtentReportManager{
 	public static ExtentTest extentTest;
 	final String screenshotsFilePath = PropertiesReader.getPropertyDetails("extent.reporter.screenshot.out")+ "Screenshot" + System.currentTimeMillis() + ".PNG";
 
-	@BeforeTest
+	@BeforeTest(alwaysRun = true)
 	@Parameters("browser")
 	protected static void lunchBrowser(ITestContext context, @Optional("chrome") String browser) {
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
@@ -63,7 +63,7 @@ public class BaseClass extends ExtentReportManager{
 	}
 
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	protected void checkStatus(ITestResult result) {
 		File srcFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
 		try {
