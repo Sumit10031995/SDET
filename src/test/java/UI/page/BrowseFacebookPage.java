@@ -26,32 +26,17 @@ public class BrowseFacebookPage {
 		return FBText;
 	}
 
-	public void setFBText(WebElement fBText) {
-		FBText = fBText;
-	}
-
 	public WebElement getIdTextbox() {
 		return idTextbox;
-	}
-
-	public void setIdTextbox(WebElement idTextbox) {
-		this.idTextbox = idTextbox;
 	}
 
 	public WebElement getPassTextbox() {
 		return passTextbox;
 	}
 
-	public void setPassTextbox(WebElement passTextbox) {
-		this.passTextbox = passTextbox;
-	}
-
 	public WebElement getLoginButton() {
 		return loginButton;
 	}
 
-	public void setLoginButton(WebElement loginButton) {
-		this.loginButton = loginButton;
-	}
 
 }

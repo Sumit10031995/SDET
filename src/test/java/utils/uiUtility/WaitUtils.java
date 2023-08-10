@@ -12,7 +12,7 @@ import utils.fileReader.PropertiesReader;
 public class WaitUtils {
 	private static int time;
 	 WaitUtils() {
-		time=Integer.parseInt(PropertiesReader.getPropertyDetails("duration"));
+		time=Integer.parseInt(PropertiesReader.getPropertyDetails("duration.mili"));
 	}
 
 	public static void visibilityOf(WebDriver driver, WebElement wb) {

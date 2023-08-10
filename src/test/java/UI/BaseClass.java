@@ -28,10 +28,9 @@ import report.Setup;
 import utils.fileReader.PropertiesReader;
 @Listeners(Setup.class)
 public class BaseClass extends ExtentReportManager{
-	private static final Logger logger = Logger.getLogger(BaseClass.class.getName());
-	protected WebDriver driver = null;
-	public static ExtentReports extentReport;
-	public static ExtentTest extentTest;
+	private  final Logger logger = Logger.getLogger(BaseClass.class.getName());
+	protected static WebDriver driver = null;
+	public ExtentTest extentTest;
 	final String screenshotsFilePath = PropertiesReader.getPropertyDetails("extent.reporter.screenshot.out")+ "Screenshot" + System.currentTimeMillis() + ".PNG";
 
 	@BeforeClass(alwaysRun = true)
