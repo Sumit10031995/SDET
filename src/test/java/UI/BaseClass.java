@@ -13,8 +13,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Optional;
@@ -27,14 +29,14 @@ import utils.fileReader.PropertiesReader;
 @Listeners(Setup.class)
 public class BaseClass extends ExtentReportManager{
 	private static final Logger logger = Logger.getLogger(BaseClass.class.getName());
-	protected static WebDriver driver = null;
+	protected WebDriver driver = null;
 	public static ExtentReports extentReport;
 	public static ExtentTest extentTest;
 	final String screenshotsFilePath = PropertiesReader.getPropertyDetails("extent.reporter.screenshot.out")+ "Screenshot" + System.currentTimeMillis() + ".PNG";
 
-	@BeforeTest(alwaysRun = true)
+	@BeforeClass(alwaysRun = true)
 	@Parameters("browser")
-	protected static void lunchBrowser(ITestContext context, @Optional("chrome") String browser) {
+	protected  void lunchBrowser(ITestContext context, @Optional("chrome") String browser) {
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
 		switch (browser) {
 		case "chrome": {
@@ -55,7 +57,7 @@ public class BaseClass extends ExtentReportManager{
 		logger.info("Browser launched successfully");
 	}
 
-	@AfterTest
+	@AfterClass
 	protected void quitQuit() {
 		driver.quit();
 		logger.info("Browser closed successfully");
@@ -64,7 +66,7 @@ public class BaseClass extends ExtentReportManager{
 
 
 	@AfterMethod(alwaysRun = true)
-	protected void checkStatus(ITestResult result) {
+	protected void  checkStatus(ITestResult result) {
 		File srcFile = ((TakesScreenshot) this.driver).getScreenshotAs(OutputType.FILE);
 		try {
 			if (result.getStatus() == ITestResult.FAILURE) {

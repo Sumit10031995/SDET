@@ -8,18 +8,36 @@
 <body>
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
-<tr><th colspan="7">Default suite</th></tr>
-<tr><td><a href="#t0">Default test</a></td><td class="num">8</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">257</td><td></td><td></td></tr>
+<tr><th colspan="7">ParallelTestSuite</th></tr>
+<tr><td><a href="#t0">ParallelTest</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">2</td><td class="num">61,418</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="8">UI.step.TestNgGrouping</td><td><a href="#m0">dependentMethodTest</a></td><td rowspan="1">1691568028154</td><td rowspan="1">14</td></tr><tr class="passedeven"><td><a href="#m1">dependsGroupTest</a></td><td rowspan="1">1691568028174</td><td rowspan="1">3</td></tr><tr class="passedeven"><td><a href="#m2">teatDependsOnGroup</a></td><td rowspan="1">1691568028182</td><td rowspan="1">5</td></tr><tr class="passedeven"><td><a href="#m3">teatDependsOnMethod</a></td><td rowspan="1">1691568028189</td><td rowspan="1">5</td></tr><tr class="passedeven"><td><a href="#m4">teatInclude</a></td><td rowspan="1">1691568028198</td><td rowspan="1">4</td></tr><tr class="passedeven"><td><a href="#m5">teatRegression</a></td><td rowspan="1">1691568028207</td><td rowspan="1">3</td></tr><tr class="passedeven"><td><a href="#m6">teatSanity</a></td><td rowspan="1">1691568028219</td><td rowspan="1">3</td></tr><tr class="passedeven"><td><a href="#m7">teatSmoke</a></td><td rowspan="1">1691568028230</td><td rowspan="1">7</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">ParallelTestSuite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">ParallelTest &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">UI.step.BrowseFacebookStep</td><td><a href="#m0">checkStatus</a></td><td rowspan="1">1691633432710</td><td rowspan="1">669</td></tr><tr class="failedodd"><td rowspan="1">UI.step.TestNgGrouping</td><td><a href="#m1">checkStatus</a></td><td rowspan="1">1691633468856</td><td rowspan="1">2265</td></tr><tr><th colspan="4">ParallelTest &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">UI.step.BrowseFacebookStep</td><td><a href="#m2">testFBLoginFeature</a></td><td rowspan="1">1691633418607</td><td rowspan="1">14034</td></tr><tr class="failedodd"><td rowspan="1">UI.step.TestNgGrouping</td><td><a href="#m3">teatSanity</a></td><td rowspan="1">1691633419091</td><td rowspan="1">49760</td></tr><tr><th colspan="4">ParallelTest &#8212; skipped (configuration methods)</th></tr><tr class="skippedeven"><td rowspan="1">UI.step.BrowseFacebookStep</td><td><a href="#m4">quitQuit</a></td><td rowspan="1">1691633433409</td><td rowspan="1">-1691633433409</td></tr><tr class="skippedodd"><td rowspan="1">UI.step.TestNgGrouping</td><td><a href="#m5">quitQuit</a></td><td rowspan="1">1691633471130</td><td rowspan="1">-1691633471130</td></tr></tbody>
 </table>
-<h2>Default test</h2><h3 id="m0">UI.step.TestNgGrouping#dependentMethodTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">UI.step.TestNgGrouping#dependsGroupTest</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m2">UI.step.TestNgGrouping#teatDependsOnGroup</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m3">UI.step.TestNgGrouping#teatDependsOnMethod</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m4">UI.step.TestNgGrouping#teatInclude</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m5">UI.step.TestNgGrouping#teatRegression</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m6">UI.step.TestNgGrouping#teatSanity</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m7">UI.step.TestNgGrouping#teatSmoke</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>ParallelTest</h2><h3 id="m0">UI.step.BrowseFacebookStep#checkStatus</h3><table class="result"><tr class="param"><th>Parameter #1</th></tr><tr class="param stripe"><td>[TestResult name=testFBLoginFeature status=FAILURE method=BrowseFacebookStep.testFBLoginFeature()[pri:0, instance:UI.step.BrowseFacebookStep@5b619d14] output={null}]</td></tr><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.NullPointerException: Cannot invoke &quot;com.aventstack.extentreports.ExtentTest.fail(java.lang.Throwable)&quot; because &quot;UI.BaseClass.extentTest&quot; is null
+	at UI.BaseClass.checkStatus(BaseClass.java:76)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+... Removed 17 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">UI.step.TestNgGrouping#checkStatus</h3><table class="result"><tr class="param"><th>Parameter #1</th></tr><tr class="param stripe"><td>[TestResult name=teatSanity status=FAILURE method=TestNgGrouping.teatSanity()[pri:0, instance:UI.step.TestNgGrouping@1f6c9cd8] output={null}]</td></tr><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.NullPointerException: Cannot invoke &quot;com.aventstack.extentreports.ExtentTest.fail(java.lang.Throwable)&quot; because &quot;UI.BaseClass.extentTest&quot; is null
+	at UI.BaseClass.checkStatus(BaseClass.java:76)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+... Removed 17 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">UI.step.BrowseFacebookStep#testFBLoginFeature</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.AssertionError: expected [sumit] but found [ram]
+	at UI.step.BrowseFacebookStep.testFBLoginFeature(BrowseFacebookStep.java:20)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+... Removed 17 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m3">UI.step.TestNgGrouping#teatSanity</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.AssertionError: did not expect to find [true] but found [false]
+	at UI.step.TestNgGrouping.teatSanity(TestNgGrouping.java:19)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+... Removed 16 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m4">UI.step.BrowseFacebookStep#quitQuit</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m5">UI.step.TestNgGrouping#quitQuit</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

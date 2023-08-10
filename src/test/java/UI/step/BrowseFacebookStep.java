@@ -10,7 +10,7 @@ import utils.uiUtility.WaitUtils;
 
 public class BrowseFacebookStep extends BaseClass {
 	
-	@Test(groups = "smoke")
+	@Test(groups = "sanity")
 	public void testFBLoginFeature() {
 		driver.get(BrowseFacebookPage.url);
 		logInfo("Navigated To FB URL");
