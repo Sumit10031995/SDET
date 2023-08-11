@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import com.google.gson.Gson;
+
 import java.net.URL;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -21,6 +23,7 @@ import utils.fileReader.FileManager;
 
 @Listeners(Setup.class)
 public class BaseAPI extends ExtentReportManager {
+	Gson gson = new Gson();
 	private final static String apiSchema=FileManager.searchFile("apiSchema.json").getAbsolutePath();
 	public static boolean isNotNullAndNotEmpty(String str) {
 		return str != null && !str.isEmpty();

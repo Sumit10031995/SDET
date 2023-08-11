@@ -21,6 +21,7 @@ import io.restassured.RestAssured;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 import utils.fileReader.PropertiesReader;
+import utils.utility.Assertions;
 import utils.utility.Utility;
 
 public class DoPostRequest {
@@ -28,6 +29,7 @@ public class DoPostRequest {
 
 	@Test(priority = 0, dataProvider = "API-POSTRequest-Body", dataProviderClass = APIDataProvider.class)
 	public void doGetRequest(PostRequestBodyDTO request) {
+		String salary="124";
 		PostAPIResponseDTO postAPIResponseDTO = new PostAPIResponseDTO();
 		PropertiesReader prop = new PropertiesReader();
 		String baseURL = prop.getPropertyDetails("baseurl");
@@ -41,8 +43,14 @@ public class DoPostRequest {
 			AssertJUnit.assertEquals(response.statusCode(), 200);
 			postAPIResponseDTO = gson.fromJson(formattedResponse, PostAPIResponseDTO.class);
 			System.out.println(postAPIResponseDTO.getData().getSalary().equals("124"));
-		} else
-			AssertJUnit.assertTrue(false);
+			Assertions.assertEquals("Name Not Matching", postAPIResponseDTO.getData().getSalary(), salary);
+			} 
+			else if (response.statusCode() == 404)
+				Assertions.assertTrue("API End Point Is Not Correct", false);
+			else if (response.statusCode() == 429)
+				Assertions.assertTrue("Too Many Request Error", false);
+			else if (response.statusCode() == 500)
+				Assertions.assertTrue("Internal Server Error", false);
 
-	}
+		}
 }
