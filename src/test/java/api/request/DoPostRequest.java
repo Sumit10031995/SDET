@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
 import com.google.gson.Gson;
 
+import UI.BaseClass;
 import api.requestDTO.PostRequestBodyDTO;
 import api.responseDTO.GetAPIResponseDTO;
 import api.responseDTO.GetAPIResponseDTO.Employee;
@@ -24,9 +25,7 @@ import utils.fileReader.PropertiesReader;
 import utils.utility.Assertions;
 import utils.utility.Utility;
 
-public class DoPostRequest {
-	Gson gson = new Gson();
-
+public class DoPostRequest extends BaseAPI{
 	@Test(priority = 0, dataProvider = "API-POSTRequest-Body", dataProviderClass = APIDataProvider.class)
 	public void doGetRequest(PostRequestBodyDTO request) {
 		String salary="124";
