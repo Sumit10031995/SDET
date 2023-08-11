@@ -1,7 +1,10 @@
 package javaP;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.testng.Assert;
 import org.testng.AssertJUnit;
@@ -24,89 +27,84 @@ import java.util.Arrays;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 public class Array {
+	   public static void main(String[] args) {
+	        String[] values = {"Hello!123", "abcxyz@", "12345", "Special!", "alpha_beta", "123_456", "Hello World!"};
 
-	public static void main(String[] args) {
-		System.out.println(readObject("sumit"));
+	        String pattern = "^(?=.*[a-zA-Z])(?=.*[-!@#$%^&*()_+{}\\[\\]:;<>,.?~\\/\\s])[a-zA-Z\\d!@#$%^&*()_+{}\\[\\]:;<>,.?~\\/\\s]+$";
+	        Pattern regex = Pattern.compile(pattern);
 
-	}
-	
-	public static File getFileLocation(File src,File target) {
-		if(src.isDirectory()) {
-			File[] dirs=src.listFiles();
-			for(File folder:dirs) {
-				if(folder.isDirectory()) {
-					File expFile=getFileLocation(folder,target) ;
-					if(expFile!=null)
-						return expFile;
-				}else {
-					if(folder.getName().equals(target.toString()))
-						return folder;
-				}
+	        for (String value : values) {
+	            Matcher matcher = regex.matcher(value);
+	            if (matcher.matches()) {
+	                System.out.println(value + " truye");
+	            } else {
+	                System.out.println(value + " false");
+	            }
+	        }
+	    }     
 
-				
-			}
-		}
-		return null;
-	}
-	
-	
-	public static File getFolderLocation(File src,File target) {
-		if(src.isDirectory()) {
-			File[] dirs=src.listFiles();
-			for(File folder:dirs) {
-				if(folder.isDirectory()) {
-					if(folder.getName().equals(target.toString()))
-						return folder;
-				}else {
-					File expFile=getFileLocation(folder,target) ;
-					if(expFile!=null)
-						return expFile;
-				}
+public static boolean isValidMobileNumber(String mobileNumber) {
+	Pattern ptn = Pattern.compile("[0-9]{10}");
+	return ptn.matcher(mobileNumber).find();
+}
 
-				
-			}
-		}
-		return null;
-	}
-	
-	public static List<List<String>> getCSVDetails() {
-		List<List<String>> listOfData = new ArrayList();
-		try (CSVReader reader = new CSVReader(new FileReader(FileManager.searchFile("userDetails.csv")))) {
-			List<String[]> data = reader.readAll();
-			for (String[] row : data) {
-				List<String> details = new ArrayList();
-				for (String cell : row) {
-					details.add(cell);
-				}
-				listOfData.add(details);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return listOfData;
-	}
-	
-	public static Map readObject(String name) {
-		Map obj = new HashMap();
-		List<List<String>> data = getCSVDetails();
-		int index = 0;
-		for (int i = 0; i < data.get(0).size(); i++) {
-			if (data.get(0).get(i).equalsIgnoreCase("Name")) {
-				index = i;
-				break;
-			}
+public static boolean isValidEmailId(String email) {
+	Pattern ptn = Pattern.compile("^[a-zA-Z0-9_.]+@[a-zA-Z]+(?:\\.[a-zA-Z]+)*$");
+	return ptn.matcher(email).find();
+}
 
-		}
-		for (int i = 1; i < data.size(); i++) {
-			if (data.get(i).get(index).equals(name)) {
-				for (int j = 0; j < data.get(i).size(); j++) {
-					obj.put(data.get(0).get(j), data.get(i).get(j));
-				}
-			}
-		}
+public static boolean isInteger(String integer) {
+	Pattern ptn = Pattern.compile("^-?\\d+$");
+	return ptn.matcher(String.valueOf(integer)).find();
+}
 
-		return obj;
-	}
+public static boolean isNumber(String number) {
+	Pattern ptn = Pattern.compile("^-?\\d+(\\.\\d*)?$");
+	return ptn.matcher(String.valueOf(number)).find();
+}
+
+public static boolean isDouble(String doubleNumber) {
+	Pattern ptn = Pattern.compile("^-?\\d+\\.\\d+$");
+	return ptn.matcher(String.valueOf(doubleNumber)).find();
+}
+
+public static boolean isNonZeroInteger(String integer) {
+	Pattern ptn = Pattern.compile("^[1-9]\\d*$");
+	return ptn.matcher(String.valueOf(integer)).find();
+}
+
+public static boolean isNonZeroNumber(String doubleNumber) {
+	Pattern ptn = Pattern.compile("^[+]?\\d+(\\.\\d+)?$");
+	return ptn.matcher(String.valueOf(doubleNumber)).find();
+}
+
+public static boolean isNonZeroDoubleNumber(String doubleNumber) {
+	Pattern ptn = Pattern.compile("^(?!0\\.0$)(?!\\d+$)\\d*\\.\\d+$");
+	return ptn.matcher(String.valueOf(doubleNumber)).find();
+}
+
+public static boolean isContainsSpecialCharacter(String doubleNumber) {
+	Pattern ptn = Pattern.compile("[!\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}~\\s]");
+	return ptn.matcher(String.valueOf(doubleNumber)).find();
+}
+
+public static boolean isAlphabet(String charSeq) {
+	Pattern ptn = Pattern.compile("^[a-zA-Z]+$");
+	return ptn.matcher(String.valueOf(charSeq)).find();
+}
+
+public static boolean isAlphaNumeric(String charSeq) {
+	Pattern ptn = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$");
+	return ptn.matcher(String.valueOf(charSeq)).find();
+}
+
+public static boolean isAlphaSymbolic(String charSeq) {
+	Pattern ptn = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\/-\\s])[a-zA-Z!@#$%^&*()_+{}\\[\\]:;<>,.?~\\/-\\s]+$");
+	return ptn.matcher(String.valueOf(charSeq)).find();
+}
+
+
 }
