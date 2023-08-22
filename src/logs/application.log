@@ -1,0 +1,9 @@
+18:40:11.459 [main] DEBUG com.javaP.Array - Debug message
+18:40:11.462 [main] INFO  com.javaP.Array - Info message
+18:40:11.462 [main] WARN  com.javaP.Array - Warning message
+18:40:11.462 [main] ERROR com.javaP.Array - Error message
+22:26:11.431 [main] INFO  com.javaP.Array - [EmpoyeeDetailsDTO {employeeID=3, employeeName=sumit, employeeSalary=30}, EmpoyeeDetailsDTO {employeeID=1, employeeName=shuvashree, employeeSalary=10}, EmpoyeeDetailsDTO {employeeID=60, employeeName=sumit, employeeSalary=600}]
+22:32:04.667 [main] INFO  com.javaP.Array - [EmpoyeeDetailsDTO {employeeID=3, employeeName=sumit, employeeSalary=30}, EmpoyeeDetailsDTO {employeeID=1, employeeName=shuvashree, employeeSalary=10}, EmpoyeeDetailsDTO {employeeID=60, employeeName=sumit, employeeSalary=600}]
+22:39:58.381 [main] INFO  com.javaP.Array - [EmpoyeeDetailsDTO {employeeID=1, employeeName=shuvashree, employeeSalary=10}, EmpoyeeDetailsDTO {employeeID=3, employeeName=sumit, employeeSalary=30}, EmpoyeeDetailsDTO {employeeID=60, employeeName=sumit, employeeSalary=600}]
+22:40:38.181 [main] INFO  com.javaP.Array - [EmpoyeeDetailsDTO {employeeID=1, employeeName=shuvashree, employeeSalary=10}, EmpoyeeDetailsDTO {employeeID=2, employeeName=trisha, employeeSalary=600}, EmpoyeeDetailsDTO {employeeID=3, employeeName=sumit, employeeSalary=30}, EmpoyeeDetailsDTO {employeeID=60, employeeName=smita, employeeSalary=600}]
+22:41:23.390 [main] INFO  com.javaP.Array - [EmpoyeeDetailsDTO {employeeID=1, employeeName=shuvashree, employeeSalary=10}, EmpoyeeDetailsDTO {employeeID=3, employeeName=sumit, employeeSalary=30}, EmpoyeeDetailsDTO {employeeID=60, employeeName=smita, employeeSalary=600}, EmpoyeeDetailsDTO {employeeID=2, employeeName=trisha, employeeSalary=600}]

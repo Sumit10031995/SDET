@@ -9,14 +9,18 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="7">Default suite</th></tr>
-<tr><td><a href="#t0">Default test</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">4,531</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Default test</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">4,072</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">api.request.DoPostRequest</td><td><a href="#m0">doGetRequest</a></td><td rowspan="1">1691774256089</td><td rowspan="1">4390</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">api.request.DoPostRequest</td><td><a href="#m0">doGetRequest</a></td><td rowspan="1">1692533036926</td><td rowspan="1">3766</td></tr></tbody>
 </table>
-<h2>Default test</h2><h3 id="m0">api.request.DoPostRequest#doGetRequest</h3><table class="result"><tr class="param"><th>Parameter #1</th></tr><tr class="param stripe"><td>PostRequestBodyDTO :{name=test, salary=123, age=23}</td></tr><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.NullPointerException: Cannot invoke &quot;com.aventstack.extentreports.ExtentTest.fail(com.aventstack.extentreports.markuputils.Markup)&quot; because the return value of &quot;java.lang.ThreadLocal.get()&quot; is null
-	at report.ExtentReportManager.logFail(ExtentReportManager.java:34)
-	at utils.utility.Assertions.assertEquals(Assertions.java:14)
-	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:46)
+<h2>Default test</h2><h3 id="m0">api.request.DoPostRequest#doGetRequest</h3><table class="result"><tr class="param"><th>Parameter #1</th></tr><tr class="param stripe"><td>PostRequestBodyDTO :{name=test, salary=123, age=23}</td></tr><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.AssertionError: expected [Is Expected Equal To Actual?&quot;false&quot;] but found [Too Many Request Error]
+	at org.testng.Assert.fail(Assert.java:97)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:136)
+	at org.testng.Assert.assertEquals(Assert.java:118)
+	at org.testng.Assert.assertEquals(Assert.java:575)
+	at org.testng.Assert.assertEquals(Assert.java:585)
+	at utils.utility.Assertions.assertTrue(Assertions.java:44)
+	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:56)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2023-08-11T22:47:36 IST" name="Default suite" finished-at="2023-08-11T22:47:40 IST" duration-ms="4531">
+  <suite started-at="2023-08-20T17:33:56 IST" name="Default suite" finished-at="2023-08-20T17:34:00 IST" duration-ms="4072">
     <groups>
     </groups>
-    <test started-at="2023-08-11T22:47:36 IST" name="Default test" finished-at="2023-08-11T22:47:40 IST" duration-ms="4531">
+    <test started-at="2023-08-20T17:33:56 IST" name="Default test" finished-at="2023-08-20T17:34:00 IST" duration-ms="4072">
       <class name="api.request.DoPostRequest">
-        <test-method signature="doGetRequest(api.requestDTO.PostRequestBodyDTO)[pri:0, instance:api.request.DoPostRequest@6f2cfcc2]" started-at="2023-08-11T22:47:36 IST" name="doGetRequest" data-provider="API-POSTRequest-Body" finished-at="2023-08-11T22:47:40 IST" duration-ms="4390" status="FAIL">
+        <test-method signature="doGetRequest(api.requestDTO.PostRequestBodyDTO)[pri:0, instance:api.request.DoPostRequest@3f3c7bdb]" started-at="2023-08-20T17:33:56 IST" name="doGetRequest" data-provider="API-POSTRequest-Body" finished-at="2023-08-20T17:34:00 IST" duration-ms="3766" status="FAIL">
           <params>
             <param index="0">
               <value>
@@ -15,15 +15,19 @@
               </value>
             </param>
           </params>
-          <exception class="java.lang.NullPointerException">
+          <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[Cannot invoke "com.aventstack.extentreports.ExtentTest.fail(com.aventstack.extentreports.markuputils.Markup)" because the return value of "java.lang.ThreadLocal.get()" is null]]>
+              <![CDATA[expected [Is Expected Equal To Actual?"false"] but found [Too Many Request Error]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException: Cannot invoke "com.aventstack.extentreports.ExtentTest.fail(com.aventstack.extentreports.markuputils.Markup)" because the return value of "java.lang.ThreadLocal.get()" is null
-at report.ExtentReportManager.logFail(ExtentReportManager.java:34)
-at utils.utility.Assertions.assertEquals(Assertions.java:14)
-at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:46)
+              <![CDATA[java.lang.AssertionError: expected [Is Expected Equal To Actual?"false"] but found [Too Many Request Error]
+at org.testng.Assert.fail(Assert.java:97)
+at org.testng.Assert.assertEqualsImpl(Assert.java:136)
+at org.testng.Assert.assertEquals(Assert.java:118)
+at org.testng.Assert.assertEquals(Assert.java:575)
+at org.testng.Assert.assertEquals(Assert.java:585)
+at utils.utility.Assertions.assertTrue(Assertions.java:44)
+at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:56)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -41,7 +45,7 @@ at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecut
 at java.base/java.lang.Thread.run(Thread.java:833)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- doGetRequest -->

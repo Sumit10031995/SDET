@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Aug 11 22:47:36 IST 2023</td>
+<td>Started on:</td><td>Sun Aug 20 17:33:56 IST 2023</td>
 </tr>
-<tr><td>Total time:</td><td>4 seconds (4531 ms)</td>
+<tr><td>Total time:</td><td>4 seconds (4072 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -76,10 +76,14 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='api.request.DoPostRequest.doGetRequest()'><b>doGetRequest</b><br>Test class: api.request.DoPostRequest<br>Parameters: PostRequestBodyDTO :{name=test, salary=123, age=23}</td>
-<td><div><pre>java.lang.NullPointerException: Cannot invoke &quot;com.aventstack.extentreports.ExtentTest.fail(com.aventstack.extentreports.markuputils.Markup)&quot; because the return value of &quot;java.lang.ThreadLocal.get()&quot; is null
-	at report.ExtentReportManager.logFail(ExtentReportManager.java:34)
-	at utils.utility.Assertions.assertEquals(Assertions.java:14)
-	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:46)
+<td><div><pre>java.lang.AssertionError: expected [Is Expected Equal To Actual?&quot;false&quot;] but found [Too Many Request Error]
+	at org.testng.Assert.fail(Assert.java:97)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:136)
+	at org.testng.Assert.assertEquals(Assert.java:118)
+	at org.testng.Assert.assertEquals(Assert.java:575)
+	at org.testng.Assert.assertEquals(Assert.java:585)
+	at utils.utility.Assertions.assertTrue(Assertions.java:44)
+	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:56)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -95,11 +99,15 @@ function toggleAllBoxes() {
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:833)
-</pre></div><a href='#' onClick='toggleBox("stack-trace76899461", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace76899461'><pre>java.lang.NullPointerException: Cannot invoke &quot;com.aventstack.extentreports.ExtentTest.fail(com.aventstack.extentreports.markuputils.Markup)&quot; because the return value of &quot;java.lang.ThreadLocal.get()&quot; is null
-	at report.ExtentReportManager.logFail(ExtentReportManager.java:34)
-	at utils.utility.Assertions.assertEquals(Assertions.java:14)
-	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:46)
+</pre></div><a href='#' onClick='toggleBox("stack-trace276752887", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace276752887'><pre>java.lang.AssertionError: expected [Is Expected Equal To Actual?&quot;false&quot;] but found [Too Many Request Error]
+	at org.testng.Assert.fail(Assert.java:97)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:136)
+	at org.testng.Assert.assertEquals(Assert.java:118)
+	at org.testng.Assert.assertEquals(Assert.java:575)
+	at org.testng.Assert.assertEquals(Assert.java:585)
+	at utils.utility.Assertions.assertTrue(Assertions.java:44)
+	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:56)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -116,8 +124,8 @@ function toggleAllBoxes() {
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:833)
 </pre></div></td>
-<td>4</td>
-<td>api.request.DoPostRequest@6f2cfcc2</td></tr>
+<td>3</td>
+<td>api.request.DoPostRequest@3f3c7bdb</td></tr>
 </table><p>
 </body>
 </html>

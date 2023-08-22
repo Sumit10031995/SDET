@@ -129,10 +129,14 @@
                   </a> <!-- doGetRequest(PostRequestBodyDTO :{name=test, salary=123, age=23}) -->
                   <span class="method-name">doGetRequest</span>
                   <span class="parameters">(PostRequestBodyDTO :{name=test, salary=123, age=23})</span>
-                  <div class="stack-trace">java.lang.NullPointerException: Cannot invoke &quot;com.aventstack.extentreports.ExtentTest.fail(com.aventstack.extentreports.markuputils.Markup)&quot; because the return value of &quot;java.lang.ThreadLocal.get()&quot; is null
-	at report.ExtentReportManager.logFail(ExtentReportManager.java:34)
-	at utils.utility.Assertions.assertEquals(Assertions.java:14)
-	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:46)
+                  <div class="stack-trace">java.lang.AssertionError: expected [Is Expected Equal To Actual?&quot;false&quot;] but found [Too Many Request Error]
+	at org.testng.Assert.fail(Assert.java:97)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:136)
+	at org.testng.Assert.assertEquals(Assert.java:118)
+	at org.testng.Assert.assertEquals(Assert.java:575)
+	at org.testng.Assert.assertEquals(Assert.java:585)
+	at utils.utility.Assertions.assertTrue(Assertions.java:44)
+	at api.request.DoPostRequest.doGetRequest(DoPostRequest.java:56)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -157,7 +161,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">/private/var/folders/_s/hws5qrm17qsd373tdc9gshyw0000gn/T/testng-eclipse-1553201086/testng-customsuite.xml</span>
+            <span class="header-content">/private/var/folders/_s/hws5qrm17qsd373tdc9gshyw0000gn/T/testng-eclipse-414073694/testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -210,12 +214,12 @@ data.addRows(1);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'doGetRequest')
 data.setCell(0, 2, 'api.request.DoPostRequest')
-data.setCell(0, 3, 4390);
+data.setCell(0, 3, 3766);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 4 seconds</span>
+              <span class="suite-total-time">Total running time: 3 seconds</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
