@@ -1,17 +1,64 @@
 package com.utils.gsheetvalidation;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+import com.utils.utility.Utility;
 
-import com.google.cloud.ReadChannel;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.ByteArrayInputStream;
+import java.io.BufferedReader;
+
+import java.nio.channels.Channels;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;import com.google.cloud.ReadChannel;
 import com.google.cloud.storage.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import org.testng.annotations.Test;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
 
 public class GCPConnection {
 	private static Logger logger = LogManager.getLogger(GCPConnection.class);
+	
+	  public synchronized List<Map<String, String>> readCSsVFromGCS(String bucketName, String objectName) {
+	        List<Map<String, String>> dataList = new ArrayList<>();
+	        Storage storage = StorageOptions.getDefaultInstance().getService();
+	        Blob blob = storage.get(bucketName, objectName);
+
+	        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(blob.getContent());
+	             InputStreamReader inputStreamReader = new InputStreamReader(byteArrayInputStream);
+	             BufferedReader reader = new BufferedReader(inputStreamReader)) {
+
+	            String headerLine = reader.readLine();
+	            String[] headers = headerLine.split(","); 
+
+	            String line;
+	            while ((line = reader.readLine()) != null) {
+	                String[] values = Utility.parseCSVLine(line);
+
+	                if (values.length == headers.length) {
+	                    Map<String, String> dataMap = new HashMap<>();
+	                    for (int i = 0; i < headers.length; i++) {
+	                        dataMap.put(headers[i], values[i]);
+	                    }
+	                    dataList.add(dataMap);
+	                }
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return dataList;
+	    }
 
 	public void getGCloudData(String bucketName, String fileNameInBucket, String filePathToStore) throws IOException {
 		try {

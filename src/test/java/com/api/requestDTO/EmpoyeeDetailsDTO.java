@@ -1,16 +1,23 @@
 package com.api.requestDTO;
 
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.util.Comparator;
 
-public class EmpoyeeDetailsDTO implements Comparator<EmpoyeeDetailsDTO>{
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+
+public class EmpoyeeDetailsDTO {
 
 	private int employeeID;
 	private String employeeName;
-	private int employeeSalary;
+	private String employeeSalary;
     
 	public EmpoyeeDetailsDTO() {};
 	
-	public EmpoyeeDetailsDTO(int employeeID, String employeeName, int employeeSalary) {
+	public EmpoyeeDetailsDTO(int employeeID, String employeeName, String employeeSalary) {
 		this.employeeID = employeeID;
 		this.employeeName = employeeName;
 		this.employeeSalary = employeeSalary;
@@ -24,7 +31,7 @@ public class EmpoyeeDetailsDTO implements Comparator<EmpoyeeDetailsDTO>{
 		return employeeName;
 	}
 
-	public int getEmployeeSalary() {
+	public String getEmployeeSalary() {
 		return employeeSalary;
 	}
 
@@ -34,9 +41,6 @@ public class EmpoyeeDetailsDTO implements Comparator<EmpoyeeDetailsDTO>{
 				+ employeeSalary + "}";
 	}
 
-	@Override
-	public int compare(EmpoyeeDetailsDTO o1, EmpoyeeDetailsDTO o2) {
-		return o1.getEmployeeName().compareTo(o2.getEmployeeName());
-	}
+
 
 }

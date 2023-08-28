@@ -23,14 +23,21 @@ import com.utils.retryPolicy.Retry;
 
 public class Testftsg {
 	public static void main(String args) {
-		String a=null;
-			Failsafe.with(Retry.retryPolicy).run(() ->
-			 {
-			     System.out.println("Status is not processed"+ a);
-
-	});
+		System.out.println(isPlural("foot"));
+	
 	}
-	    
+	 public static boolean isPlural(String word) {
+	        String[] pluralRules = {
+	            "s$", "es$", "[^aeiou]y$", "[aeiou]y[s|ies]$", "[sxzh]$", "[^sxzhyu]$"
+	        };
+
+	        for (String rule : pluralRules) {
+	            if (Pattern.matches(".*" + rule, word)) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
 	     
 }
 

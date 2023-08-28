@@ -2,26 +2,25 @@ package com.utils.utility;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-
-import org.testng.annotations.Test;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -32,18 +31,7 @@ import com.google.gson.GsonBuilder;
 
 public class Utility {
 
-	public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-	
+
 //	  public Set<List<String>> convertObjectToList(CatalogProductIngestionDetailsDTO.ProductIngestionDetails object) {
 //	        ObjectMapper oMapper = new ObjectMapper();
 //	        Map<String, String> map = oMapper.convertValue(object, Map.class);
@@ -59,370 +47,491 @@ public class Utility {
 //	        return expDataList;
 //	    }
 
-	 public void removeColumn(List<List<String>> expData, String clmName) {
-	        List<String> columnDetails = new ArrayList();
-	        Integer pointer = null;
-	        boolean flag = false;
-	        try {
-	            for (int i = 0; i < expData.get(0).size(); i++) {
-	                if (expData.get(0).get(i).equalsIgnoreCase(clmName)) {
-	                    pointer = i;
-	                    flag = true;
-	                    break;
-	                }
-	            }
-	            if(pointer!=null){
-	            for (int j = 0; j < expData.size(); j++) {
-	                expData.get(j).remove(pointer);
-	            }
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
-	 
-	 public List<String> getColumnDetails(List<List<String>> expData, String clmName) {
-	        List<String> columnDetails = new ArrayList();
-	        Integer pointer = null;
-	        boolean flag = false;
-	        try {
-	            for (int i = 0; i < expData.get(0).size(); i++) {
-	                if (expData.get(0).get(i).equalsIgnoreCase(clmName)) {
-	                    pointer = i;
-	                    flag = true;
-	                    break;
-	                }
-	            }
-	            for (int j = 1; j < expData.size(); j++) {
-	                columnDetails.add(expData.get(j).get(pointer));
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        return columnDetails;
-	    }
-	 
-	   public List<List<String>> convertObjectToListOfList(List objects) {
-	        ObjectMapper oMapper = new ObjectMapper();
-	        List<List<String>> expDataList = new ArrayList<>();
-	        for (int i = 0; i < objects.size(); i++) {
-	            Map<String, String> map = oMapper.convertValue(objects.get(i), Map.class);
-	            List<String> keySet = new ArrayList(map.keySet());
-	            List<String> values = new ArrayList(map.values());
-	            for (int j = 0; j < values.size(); j++) {
-	                if (values.get(j) == null)
-	                    values.set(j, "");
-	                if (values.get(j).contains(",")) {
-	                    values.set(j, values.get(j));
-	                }
-	            }
-	            if (i == 0)
-	                expDataList.add(keySet);
-	            expDataList.add(values);
-	        }
-	        return expDataList;
-	    }
-	   
-	   private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException, FileNotFoundException {
-	        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
-	        byte[] bytesIn = new byte[4096];
-	        int read = 0;
-	        while ((read = zipIn.read(bytesIn)) != -1) {
-	            bos.write(bytesIn, 0, read);
-	        }
-	        bos.close();
-	    }
-
-	    public static List<String> getFileToCrawl(String directory, String fileNameToNotDelete) throws IOException {
-	        List<String> list = new ArrayList();
-	        File dir = new File(directory);
-	        boolean flag = false;
-
-	        String[] children = dir.list();
-	        if (children == null) {
-	            return null;
-	        } else {
-	            int j = 0;
-	            String filename = children[j];
-	            for (; j < children.length; j++) {
-	                if (filename.contains(".jpeg") && !filename.equals(fileNameToNotDelete)) {
-	                    list.add(children[j]);
-	                    flag = true;
-	                } else if (!filename.contains(".")) {
-	                    list.add(filename);
-	                    flag = true;
-
-	                }
-	                if (j < children.length - 1)
-	                    filename = children[j + 1];
-	            }
-	            for (File file : dir.listFiles()) {
-	                if (!file.getName().equals(fileNameToNotDelete))
-	                    file.delete();
-	            }
-	        }
-	        if (flag)
-	            return list;
-	        return null;
-
-	    }
-	    
-	    public void unzip(String zipFilePath, String destDirectory) throws IOException, IOException {
-	        File destDir = new File(destDirectory);
-	        if (!destDir.exists()) {
-	            destDir.mkdir();
-	        }
-	        ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath));
-	        ZipEntry entry = zipIn.getNextEntry();
-	        int count = 0;
-	        while (entry != null && count == 0) {
-	            count++;
-	            String filePath = destDirectory + File.separator + entry.getName();
-	            if (!entry.isDirectory()) {
-	                extractFile(zipIn, filePath);
-	            } else {
-	                File dir = new File(filePath);
-	                dir.mkdirs();
-	            }
-	            zipIn.closeEntry();
-	            entry = zipIn.getNextEntry();
-	        }
-	        zipIn.close();
-	    }
-	    
-	    protected static boolean isBracketsBalanced(String expr) {
-	        Deque<Character> stack = new ArrayDeque<Character>();
-	        for (int i = 0; i < expr.length(); i++) {
-	            char x = expr.charAt(i);
-	            if (x == '[') {
-	                stack.push(x);
-	                continue;
-	            }
-	            if (stack.isEmpty())
-	                return false;
-	            char check;
-	            switch (x) {
-	                case ']':
-	                    check = stack.pop();
-	                    if (check == '(' || check == '{')
-	                        return false;
-	                    break;
-	            }
-	        }
-	        return (stack.isEmpty());
-	    }
-	    
-	    public static boolean isSameImage(String imageOne, String imageTwo) {
-	        DecimalFormat format = new DecimalFormat("#.##");
-	        try {
-	            BufferedImage img1 = ImageIO.read(new File(imageOne));
-	            BufferedImage img2 = ImageIO.read(new File(imageTwo));
-	            int w1 = img1.getWidth();
-	            int w2 = img2.getWidth();
-	            int h1 = img1.getHeight();
-	            int h2 = img2.getHeight();
-	            if ((w1 != w2) || (h1 != h2)) {
-	                System.out.println("Both images should have same dimwnsions");
-	            } else {
-	                long diff = 0;
-	                for (int j = 0; j < h1; j++) {
-	                    for (int i = 0; i < w1; i++) {
-	                        int pixel1 = img1.getRGB(i, j);
-	                        Color color1 = new Color(pixel1, true);
-	                        int r1 = color1.getRed();
-	                        int g1 = color1.getGreen();
-	                        int b1 = color1.getBlue();
-	                        int pixel2 = img2.getRGB(i, j);
-	                        Color color2 = new Color(pixel2, true);
-	                        int r2 = color2.getRed();
-	                        int g2 = color2.getGreen();
-	                        int b2 = color2.getBlue();
-	                        long data = Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
-	                        diff = diff + data;
-	                    }
-	                }
-	                double avg = diff / (w1 * h1 * 3);
-	                double percentage = (avg / 255) * 100;
-	                return (Double.parseDouble(format.format(percentage)) == 0.0) ? true : false;
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        return false;
-	    }
-	    
-	    public <T> T doSerializationWithFilteredData(List<List<String>> dataList, List<String> filterItems, String columnName, Class<T> T) {
-	        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-	        T serealized = null;
-	        List<Map<String, String>> data = new ArrayList<>();
-	        Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
-	        Integer pointer = null;
-	        boolean flag = false;
-	        try {
-	            for (int i = 0; i < dataList.get(0).size(); i++) {
-	                if (dataList.get(0).get(i).equalsIgnoreCase(columnName)) {
-	                    pointer = i;
-	                    flag = true;
-	                    break;
-	                }
-	            }
-	            for (String item : filterItems) {
-	                for (int i = 1; i < dataList.size(); i++) {
-	                    if (dataList.get(i).get(pointer).equals(item)) {
-	                        Map<String, String> expData = new LinkedHashMap<>();
-	                        for (int j = 0; j < dataList.get(0).size(); j++) {
-	                            expData.put(dataList.get(0).get(j), dataList.get(i).get(j));
-	                        }
-	                        data.add(expData);
-	                    } else continue;
-	                    break;
-	                }
-	            }
-	            addDataToMap.put("data", data);
-	            String expJsonString = gson.toJson(addDataToMap);
-	            if (data.size() > 0)
-	                return serealized = gson.fromJson(expJsonString, T);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        return serealized;
-	    }
-
-	    public <T> T doSerializationWithFilteredData(List<List<String>> dataList, String columnName, String expData, Class<T> T) {
-	        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-	        T serealized = null;
-	        Map<String, String> dataMap = new LinkedHashMap<>();
-	        List<Map<String, String>> data = new ArrayList<>();
-	        Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
-	        Integer pointer = null;
-	        boolean flag = false;
-	        try {
-	            for (int i = 0; i < dataList.get(0).size(); i++) {
-	                if (dataList.get(0).get(i).equalsIgnoreCase(columnName)) {
-	                    pointer = i;
-	                    flag = true;
-	                    break;
-	                }
-	            }
-
-	            for (int i = 1; i < dataList.size(); i++) {
-	                if (dataList.get(i).get(pointer).equals(expData)) {
-	                    for (int j = 0; j < dataList.get(0).size(); j++) {
-	                        dataMap.put(dataList.get(0).get(j), dataList.get(i).get(j));
-	                    }
-	                    data.add(dataMap);
-	                    break;
-	                }
-	            }
-	            addDataToMap.put("data", data);
-	            String expJsonString = gson.toJson(addDataToMap);
-	            if (data.size() > 0)
-	                serealized = gson.fromJson(expJsonString, T);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        return serealized;
-	    }
-
-	    public <T> T doSerializationWithMultiFilteredData(List<List<String>> dataList, String columnName1, String expData1, String columnName2, String expData2, Class<T> T) {
-	        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-	        T serealized = null;
-	        Map<String, String> expData = new LinkedHashMap<>();
-	        List<Map<String, String>> data = new ArrayList<>();
-	        Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
-	        Integer pointer1 = null;
-	        Integer pointer2 = null;
-
-	        boolean flag = false;
-	        try {
-	            for (int i = 0; i < dataList.get(0).size(); i++) {
-	                if (dataList.get(0).get(i).equalsIgnoreCase(columnName1)) {
-	                    pointer1 = i;
-	                    flag = true;
-	                    break;
-	                }
-	            }
-	            for (int i = 0; i < dataList.get(0).size(); i++) {
-	                if (dataList.get(0).get(i).equalsIgnoreCase(columnName2)) {
-	                    pointer2 = i;
-	                    flag = true;
-	                    break;
-	                }
-	            }
-
-	            for (int i = dataList.size()-1; i >1 ; i--) {
-	                if (dataList.get(i).get(pointer1).equals(expData1) && dataList.get(i).get(pointer2).equals(expData2)) {
-	                    for (int j = 0; j < dataList.get(0).size(); j++) {
-	                        expData.put(dataList.get(0).get(j), dataList.get(i).get(j));
-	                    }
-	                    data.add(expData);
-	                } else continue;
-	                break;
-	            }
-	            addDataToMap.put("data", data);
-	            String expJsonString = gson.toJson(addDataToMap);
-	            if (data.size() > 0)
-	                return serealized = gson.fromJson(expJsonString, T);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        return serealized;
-	    }
-
-	    public <T> T doSerialization(List<List<String>> dataList, Class<T> T) {
-	        Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
-	        T serealized = null;
-	        Map<String, String> expData;
-	        List<Map<String, String>> data = new ArrayList<>();
-	        Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
-
-	        try {
-	            for (int i = 1; i < dataList.size(); i++) {
-	                expData = new LinkedHashMap<>();
-	                for (int j = 0; j < dataList.get(0).size(); j++) {
-	                    if(dataList.get(i).get(j).equals(" "))
-	                        dataList.get(i).set(j,"");
-	                    expData.put(dataList.get(0).get(j), dataList.get(i).get(j));
-	                }
-	                data.add(expData);
-	            }
-	            addDataToMap.put("data", data);
-	            String expJsonString = gson.toJson(addDataToMap);
-	            if (data.size() > 0)
-	                return serealized = gson.fromJson(expJsonString, T);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        return serealized;
-	    }
-	    
-	
-		public static String captureStringAfterSpecificString(File input, String specificString) {
-			int index = input.getAbsolutePath().indexOf(specificString);
-			if (index != -1) {
-				index += specificString.length();
-				return input.getAbsolutePath().substring(index).trim();
+	public void removeColumn(List<List<String>> expData, String clmName) {
+		List<String> columnDetails = new ArrayList();
+		Integer pointer = null;
+		boolean flag = false;
+		try {
+			for (int i = 0; i < expData.get(0).size(); i++) {
+				if (expData.get(0).get(i).equalsIgnoreCase(clmName)) {
+					pointer = i;
+					flag = true;
+					break;
+				}
 			}
-			return "";
+			if (pointer != null) {
+				for (int j = 0; j < expData.size(); j++) {
+					expData.get(j).remove(pointer);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		  
-		    public static boolean isValidCurlFormat(String curlCommand) {
-		        String curlPattern = "^curl\\s+--location\\s+'http[^']+'\\\\\n"
-		                           + "\\s*--request\\s+POST\\\\\n"
-		                           + "\\s*--header\\s+'Content-Type:\\s+application/json'\\\\\n"
-		                           + "\\s*--data\\s+'\\{[^}]+\\}'$";
-		        Pattern pattern = Pattern.compile(curlPattern, Pattern.MULTILINE);
-		        Matcher matcher = pattern.matcher(curlCommand);
-		        return matcher.matches();
-		    }
-			  private static String firstCharToUpperrCase(String str) {
+	}
 
-			        if (str == null || str.length() == 0)
-			            return "";
+	public List<String> getColumnDetails(List<List<String>> expData, String clmName) {
+		List<String> columnDetails = new ArrayList();
+		Integer pointer = null;
+		boolean flag = false;
+		try {
+			for (int i = 0; i < expData.get(0).size(); i++) {
+				if (expData.get(0).get(i).equalsIgnoreCase(clmName)) {
+					pointer = i;
+					flag = true;
+					break;
+				}
+			}
+			for (int j = 1; j < expData.size(); j++) {
+				columnDetails.add(expData.get(j).get(pointer));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return columnDetails;
+	}
 
-			        if (str.length() == 1)
-			            return str.toLowerCase();
+	public List<List<String>> convertObjectToListOfList(List objects) {
+		ObjectMapper oMapper = new ObjectMapper();
+		List<List<String>> expDataList = new ArrayList<>();
+		for (int i = 0; i < objects.size(); i++) {
+			Map<String, String> map = oMapper.convertValue(objects.get(i), Map.class);
+			List<String> keySet = new ArrayList(map.keySet());
+			List<String> values = new ArrayList(map.values());
+			for (int j = 0; j < values.size(); j++) {
+				if (values.get(j) == null)
+					values.set(j, "");
+				if (values.get(j).contains(",")) {
+					values.set(j, values.get(j));
+				}
+			}
+			if (i == 0)
+				expDataList.add(keySet);
+			expDataList.add(values);
+		}
+		return expDataList;
+	}
 
-			        return str.substring(0, 1).toLowerCase() + str.substring(1, str.length());
-			    }
+	private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException, FileNotFoundException {
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+		byte[] bytesIn = new byte[4096];
+		int read = 0;
+		while ((read = zipIn.read(bytesIn)) != -1) {
+			bos.write(bytesIn, 0, read);
+		}
+		bos.close();
+	}
+
+	public static List<String> getFileToCrawl(String directory, String fileNameToNotDelete) throws IOException {
+		List<String> list = new ArrayList();
+		File dir = new File(directory);
+		boolean flag = false;
+
+		String[] children = dir.list();
+		if (children == null) {
+			return null;
+		} else {
+			int j = 0;
+			String filename = children[j];
+			for (; j < children.length; j++) {
+				if (filename.contains(".jpeg") && !filename.equals(fileNameToNotDelete)) {
+					list.add(children[j]);
+					flag = true;
+				} else if (!filename.contains(".")) {
+					list.add(filename);
+					flag = true;
+
+				}
+				if (j < children.length - 1)
+					filename = children[j + 1];
+			}
+			for (File file : dir.listFiles()) {
+				if (!file.getName().equals(fileNameToNotDelete))
+					file.delete();
+			}
+		}
+		if (flag)
+			return list;
+		return null;
+
+	}
+
+	public void unzip(String zipFilePath, String destDirectory) throws IOException, IOException {
+		File destDir = new File(destDirectory);
+		if (!destDir.exists()) {
+			destDir.mkdir();
+		}
+		ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath));
+		ZipEntry entry = zipIn.getNextEntry();
+		int count = 0;
+		while (entry != null && count == 0) {
+			count++;
+			String filePath = destDirectory + File.separator + entry.getName();
+			if (!entry.isDirectory()) {
+				extractFile(zipIn, filePath);
+			} else {
+				File dir = new File(filePath);
+				dir.mkdirs();
+			}
+			zipIn.closeEntry();
+			entry = zipIn.getNextEntry();
+		}
+		zipIn.close();
+	}
+
+	protected static boolean isBracketsBalanced(String expr) {
+		Deque<Character> stack = new ArrayDeque<Character>();
+		for (int i = 0; i < expr.length(); i++) {
+			char x = expr.charAt(i);
+			if (x == '[') {
+				stack.push(x);
+				continue;
+			}
+			if (stack.isEmpty())
+				return false;
+			char check;
+			switch (x) {
+			case ']':
+				check = stack.pop();
+				if (check == '(' || check == '{')
+					return false;
+				break;
+			}
+		}
+		return (stack.isEmpty());
+	}
+
+	public static boolean isSameImage(String imageOne, String imageTwo) {
+		DecimalFormat format = new DecimalFormat("#.##");
+		try {
+			BufferedImage img1 = ImageIO.read(new File(imageOne));
+			BufferedImage img2 = ImageIO.read(new File(imageTwo));
+			int w1 = img1.getWidth();
+			int w2 = img2.getWidth();
+			int h1 = img1.getHeight();
+			int h2 = img2.getHeight();
+			if ((w1 != w2) || (h1 != h2)) {
+				System.out.println("Both images should have same dimwnsions");
+			} else {
+				long diff = 0;
+				for (int j = 0; j < h1; j++) {
+					for (int i = 0; i < w1; i++) {
+						int pixel1 = img1.getRGB(i, j);
+						Color color1 = new Color(pixel1, true);
+						int r1 = color1.getRed();
+						int g1 = color1.getGreen();
+						int b1 = color1.getBlue();
+						int pixel2 = img2.getRGB(i, j);
+						Color color2 = new Color(pixel2, true);
+						int r2 = color2.getRed();
+						int g2 = color2.getGreen();
+						int b2 = color2.getBlue();
+						long data = Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+						diff = diff + data;
+					}
+				}
+				double avg = diff / (w1 * h1 * 3);
+				double percentage = (avg / 255) * 100;
+				return (Double.parseDouble(format.format(percentage)) == 0.0) ? true : false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public <T> T doSerializationWithFilteredData(List<List<String>> dataList, List<String> filterItems,
+			String columnName, Class<T> T) {
+		Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+		T serealized = null;
+		List<Map<String, String>> data = new ArrayList<>();
+		Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
+		Integer pointer = null;
+		boolean flag = false;
+		try {
+			for (int i = 0; i < dataList.get(0).size(); i++) {
+				if (dataList.get(0).get(i).equalsIgnoreCase(columnName)) {
+					pointer = i;
+					flag = true;
+					break;
+				}
+			}
+			for (String item : filterItems) {
+				for (int i = 1; i < dataList.size(); i++) {
+					if (dataList.get(i).get(pointer).equals(item)) {
+						Map<String, String> expData = new LinkedHashMap<>();
+						for (int j = 0; j < dataList.get(0).size(); j++) {
+							expData.put(dataList.get(0).get(j), dataList.get(i).get(j));
+						}
+						data.add(expData);
+					} else
+						continue;
+					break;
+				}
+			}
+			addDataToMap.put("data", data);
+			String expJsonString = gson.toJson(addDataToMap);
+			if (data.size() > 0)
+				return serealized = gson.fromJson(expJsonString, T);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return serealized;
+	}
+
+	public <T> T doSerializationWithFilteredData(List<List<String>> dataList, String columnName, String expData,
+			Class<T> T) {
+		Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+		T serealized = null;
+		Map<String, String> dataMap = new LinkedHashMap<>();
+		List<Map<String, String>> data = new ArrayList<>();
+		Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
+		Integer pointer = null;
+		boolean flag = false;
+		try {
+			for (int i = 0; i < dataList.get(0).size(); i++) {
+				if (dataList.get(0).get(i).equalsIgnoreCase(columnName)) {
+					pointer = i;
+					flag = true;
+					break;
+				}
+			}
+
+			for (int i = 1; i < dataList.size(); i++) {
+				if (dataList.get(i).get(pointer).equals(expData)) {
+					for (int j = 0; j < dataList.get(0).size(); j++) {
+						dataMap.put(dataList.get(0).get(j), dataList.get(i).get(j));
+					}
+					data.add(dataMap);
+					break;
+				}
+			}
+			addDataToMap.put("data", data);
+			String expJsonString = gson.toJson(addDataToMap);
+			if (data.size() > 0)
+				serealized = gson.fromJson(expJsonString, T);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return serealized;
+	}
+
+	public <T> T doSerializationWithMultiFilteredData(List<List<String>> dataList, String columnName1, String expData1,
+			String columnName2, String expData2, Class<T> T) {
+		Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+		T serealized = null;
+		Map<String, String> expData = new LinkedHashMap<>();
+		List<Map<String, String>> data = new ArrayList<>();
+		Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
+		Integer pointer1 = null;
+		Integer pointer2 = null;
+
+		boolean flag = false;
+		try {
+			for (int i = 0; i < dataList.get(0).size(); i++) {
+				if (dataList.get(0).get(i).equalsIgnoreCase(columnName1)) {
+					pointer1 = i;
+					flag = true;
+					break;
+				}
+			}
+			for (int i = 0; i < dataList.get(0).size(); i++) {
+				if (dataList.get(0).get(i).equalsIgnoreCase(columnName2)) {
+					pointer2 = i;
+					flag = true;
+					break;
+				}
+			}
+
+			for (int i = dataList.size() - 1; i > 1; i--) {
+				if (dataList.get(i).get(pointer1).equals(expData1) && dataList.get(i).get(pointer2).equals(expData2)) {
+					for (int j = 0; j < dataList.get(0).size(); j++) {
+						expData.put(dataList.get(0).get(j), dataList.get(i).get(j));
+					}
+					data.add(expData);
+				} else
+					continue;
+				break;
+			}
+			addDataToMap.put("data", data);
+			String expJsonString = gson.toJson(addDataToMap);
+			if (data.size() > 0)
+				return serealized = gson.fromJson(expJsonString, T);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return serealized;
+	}
+
+	public <T> T doSerialization(List<List<String>> dataList, Class<T> T) {
+		Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
+		T serealized = null;
+		Map<String, String> expData;
+		List<Map<String, String>> data = new ArrayList<>();
+		Map<String, List<Map<String, String>>> addDataToMap = new LinkedHashMap<>();
+
+		try {
+			for (int i = 1; i < dataList.size(); i++) {
+				expData = new LinkedHashMap<>();
+				for (int j = 0; j < dataList.get(0).size(); j++) {
+					if (dataList.get(i).get(j).equals(" "))
+						dataList.get(i).set(j, "");
+					expData.put(dataList.get(0).get(j), dataList.get(i).get(j));
+				}
+				data.add(expData);
+			}
+			addDataToMap.put("data", data);
+			String expJsonString = gson.toJson(addDataToMap);
+			if (data.size() > 0)
+				return serealized = gson.fromJson(expJsonString, T);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return serealized;
+	}
+
+	public static String captureStringAfterSpecificString(File input, String specificString) {
+		int index = input.getAbsolutePath().indexOf(specificString);
+		if (index != -1) {
+			index += specificString.length();
+			return input.getAbsolutePath().substring(index).trim();
+		}
+		return "";
+	}
+
+	public static boolean isValidCurlFormat(String curlCommand) {
+		String curlPattern = "^curl\\s+--location\\s+'http[^']+'\\\\\n" + "\\s*--request\\s+POST\\\\\n"
+				+ "\\s*--header\\s+'Content-Type:\\s+application/json'\\\\\n" + "\\s*--data\\s+'\\{[^}]+\\}'$";
+		Pattern pattern = Pattern.compile(curlPattern, Pattern.MULTILINE);
+		Matcher matcher = pattern.matcher(curlCommand);
+		return matcher.matches();
+	}
+
+	private static String firstCharToUpperrCase(String str) {
+
+		if (str == null || str.length() == 0)
+			return "";
+
+		if (str.length() == 1)
+			return str.toLowerCase();
+
+		return str.substring(0, 1).toLowerCase() + str.substring(1, str.length());
+	}
+
+	public static String[] parseCSVLine(String line) {
+		List<String> values = new ArrayList<>();
+		boolean inQuotes = false;
+		StringBuilder valueBuilder = new StringBuilder();
+
+		for (char c : line.toCharArray()) {
+			if (c == '"') {
+				inQuotes = !inQuotes;
+			} else if (c == ',' && !inQuotes) {
+				values.add(valueBuilder.toString().trim());
+				valueBuilder.setLength(0);
+			} else {
+				valueBuilder.append(c);
+			}
+		}
+
+		values.add(valueBuilder.toString().trim());
+		return values.toArray(new String[0]);
+	}
+	
+	  public static boolean compareObjects(Object obj1, Object obj2) {
+	        if (obj1 == null || obj2 == null || !obj1.getClass().equals(obj2.getClass())) {
+	            return false; // Objects are not comparable
+	        }
+
+	        Field[] fields = obj1.getClass().getDeclaredFields();
+	        for (Field field : fields) {
+	            field.setAccessible(true);
+
+	            try {
+	                Object value1 = field.get(obj1);
+	                Object value2 = field.get(obj2);
+
+	                if (value1 == null && value2 == null) {
+	                    continue; // Both values are null, consider them equal
+	                }
+
+	                if (value1 instanceof String && value2 instanceof String) {
+	                    String stringValue1 = (String) value1;
+	                    String stringValue2 = (String) value2;
+
+	                    if (isNumeric(stringValue1) && isNumeric(stringValue2)) {
+	                        if (isInteger(stringValue1) && isInteger(stringValue2)) {
+	                            int int1 = Integer.parseInt(stringValue1);
+	                            int int2 = Integer.parseInt(stringValue2);
+	                            if (int1 != int2) {
+	                                return false; // Integer values are not equal
+	                            }
+	                        } else if (isDouble(stringValue1) && isDouble(stringValue2)) {
+	                            double double1 = Double.parseDouble(stringValue1);
+	                            double double2 = Double.parseDouble(stringValue2);
+	                            double roundedDouble1 = roundToTwoDecimalPlaces(double1);
+	                            double roundedDouble2 = roundToTwoDecimalPlaces(double2);
+	                            if (roundedDouble1 != roundedDouble2) {
+	                                return false; // Double values are not equal
+	                            }
+	                        }
+	                    } else {
+	                        if (!stringValue1.equals(stringValue2)) {
+	                            return false; // String values are not equal
+	                        }
+	                    }
+	                } else {
+	                    if (!value1.equals(value2)) {
+	                        return false; // Values are not equal
+	                    }
+	                }
+	            } catch (IllegalAccessException e) {
+	                e.printStackTrace();
+	            }
+	        }
+
+	        return true; // All fields are equal
+	    }
+
+	    private static boolean isNumeric(String str) {
+	        return str.matches("-?\\d+(\\.\\d+)?");
+	    }
+
+	    private static boolean isInteger(String str) {
+	        return str.matches("-?\\d+");
+	    }
+
+	    private static boolean isDouble(String str) {
+	        return str.matches("-?\\d+\\.\\d+");
+	    }
+
+	    private static double roundToTwoDecimalPlaces(double value) {
+	        BigDecimal bd = new BigDecimal(value);
+	        bd = bd.setScale(2, RoundingMode.HALF_UP);
+	        return bd.doubleValue();
+	    }
+	    
+	  
+
+	    private <T> List<T> mapListToDtoList(List<Map<String, String>> mapList, Class<T> dtoClass) {
+	        List<T> dataList = new ArrayList<> ();
+
+	        for (Map<String, String> detailMap : mapList) {
+	            T dtoObject;
+	            try {
+	                dtoObject = dtoClass.getDeclaredConstructor ().newInstance ();
+	                for (Map.Entry<String, String> entry : detailMap.entrySet ()) {
+	                    String key = entry.getKey ();
+	                    String value = entry.getValue ();
+	                    Field field = dtoClass.getDeclaredField(key);
+	                    field.setAccessible (true);
+	                    field.set(dtoObject, value);
+	                }
+	                dataList.add (dtoObject);
+	            } catch (Exception e) {
+	                e.printStackTrace ();
+	            }
+	        }
+
+	        return dataList;
+	    }
 }
